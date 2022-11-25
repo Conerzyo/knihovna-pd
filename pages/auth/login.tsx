@@ -1,7 +1,7 @@
 export default function Login() {
   return (
     <div style={containerStyles}>
-      <h2>Login</h2>
+      <h1>Login</h1>
       <label htmlFor="username">Username</label>
       <input id="username" type="text" style={{ margin: "6px 0px" }} />
       <label htmlFor="password">Password</label>
