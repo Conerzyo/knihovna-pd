@@ -1,0 +1,221 @@
+{
+  "users": [
+    {
+      "firstName": "Andrew",
+      "lastName": "Moore",
+      "socialNumber": "5530133f6494h",
+      "address": "3243 Cedar Street, California, USA",
+      "username": "main_guy",
+      "active": true,
+      "admin": true
+    },
+    {
+      "firstName": "George",
+      "lastName": "Madison",
+      "socialNumber": "1874715a1848d",
+      "address": "4156 Snider Street, 801112, Colorado, USA",
+      "username": "puffy_bear69",
+      "active": true,
+      "admin": false
+    },
+    {
+      "firstName": "Emily",
+      "lastName": "Johnson",
+      "socialNumber": "2957112c3827e",
+      "address": "9673 Oak Street, Vermont, USA",
+      "username": "emilyj_the_dramaqueen",
+      "active": true,
+      "admin": false
+    },
+    {
+      "firstName": "Michael",
+      "lastName": "Williams",
+      "socialNumber": "3748119d4716f",
+      "address": "7541 Maple Avenue, New York, USA",
+      "username": "mikew_the_jokester",
+      "active": false,
+      "admin": false
+    },
+    {
+      "firstName": "Jessica",
+      "lastName": "Brown",
+      "socialNumber": "4639226e5605g",
+      "address": "5342 Pine Street, Texas, USA",
+      "username": "jessb_the_bookworm",
+      "active": false,
+      "admin": false
+    }
+  ],
+  "books": [
+    {
+      "_id": "1",
+      "title": "Catch-22",
+      "author": "Joseph Heller",
+      "year": 1961,
+      "pages": 520,
+      "countOverall": 5,
+      "countAvailable": 5,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "2",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "year": 1960,
+      "pages": 281,
+      "countOverall": 10,
+      "countAvailable": 10,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "3",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "year": 1925,
+      "pages": 180,
+      "countOverall": 7,
+      "countAvailable": 7,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "4",
+      "title": "One Hundred Years of Solitude",
+      "author": "Gabriel García Márquez",
+      "year": 1967,
+      "pages": 417,
+      "countOverall": 12,
+      "countAvailable": 11,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "5",
+      "title": "Moby-Dick",
+      "author": "Herman Melville",
+      "year": 1851,
+      "pages": 704,
+      "countOverall": 9,
+      "countAvailable": 9,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "6",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "year": 1813,
+      "pages": 279,
+      "countOverall": 8,
+      "countAvailable": 8,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "7",
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "year": 1951,
+      "pages": 214,
+      "countOverall": 10,
+      "countAvailable": 10,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "8",
+      "title": "The Picture of Dorian Gray",
+      "author": "Oscar Wilde",
+      "year": 1890,
+      "pages": 254,
+      "countOverall": 7,
+      "countAvailable": 7,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "9",
+      "title": "The Old Man and the Sea",
+      "author": "Ernest Hemingway",
+      "year": 1952,
+      "pages": 128,
+      "countOverall": 6,
+      "countAvailable": 6,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "10",
+      "title": "Wuthering Heights",
+      "author": "Emily Brontë",
+      "year": 1847,
+      "pages": 346,
+      "countOverall": 9,
+      "countAvailable": 9,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "11",
+      "title": "The Grapes of Wrath",
+      "author": "John Steinbeck",
+      "year": 1939,
+      "pages": 467,
+      "countOverall": 11,
+      "countAvailable": 11,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "12",
+      "title": "A Game of Thrones",
+      "author": "George R. R. Martin",
+      "year": 1996,
+      "pages": 694,
+      "countOverall": 8,
+      "countAvailable": 8,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "13",
+      "title": "A Clash of Kings",
+      "author": "George R. R. Martin",
+      "year": 1999,
+      "pages": 768,
+      "countOverall": 9,
+      "countAvailable": 9,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "14",
+      "title": "A Storm of Swords",
+      "author": "George R. R. Martin",
+      "year": 2000,
+      "pages": 992,
+      "countOverall": 10,
+      "countAvailable": 10,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "15",
+      "title": "A Feast for Crows",
+      "author": "George R. R. Martin",
+      "year": 2005,
+      "pages": 769,
+      "countOverall": 11,
+      "countAvailable": 11,
+      "coverPhoto": "./default.jpg"
+    },
+    {
+      "_id": "16",
+      "title": "A Dance with Dragons",
+      "author": "George R. R. Martin",
+      "year": 2011,
+      "pages": 1040,
+      "countOverall": 12,
+      "countAvailable": 12,
+      "coverPhoto": "./default.jpg"
+    }
+  ],
+  "loans": [
+    {
+      "id": "1",
+      "loanDate": 1672527600,
+      "dueDate": 1673132400,
+      "endDate": 1672873200,
+      "book": "1",
+      "user": "main_guy"
+    }
+  ]
+}
