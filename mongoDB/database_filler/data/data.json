@@ -48,7 +48,6 @@
   ],
   "books": [
     {
-      "_id": "1",
       "title": "Catch-22",
       "author": "Joseph Heller",
       "year": 1961,
@@ -58,7 +57,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "2",
       "title": "To Kill a Mockingbird",
       "author": "Harper Lee",
       "year": 1960,
@@ -68,7 +66,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "3",
       "title": "The Great Gatsby",
       "author": "F. Scott Fitzgerald",
       "year": 1925,
@@ -78,7 +75,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "4",
       "title": "One Hundred Years of Solitude",
       "author": "Gabriel García Márquez",
       "year": 1967,
@@ -88,7 +84,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "5",
       "title": "Moby-Dick",
       "author": "Herman Melville",
       "year": 1851,
@@ -98,7 +93,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "6",
       "title": "Pride and Prejudice",
       "author": "Jane Austen",
       "year": 1813,
@@ -108,7 +102,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "7",
       "title": "The Catcher in the Rye",
       "author": "J.D. Salinger",
       "year": 1951,
@@ -118,7 +111,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "8",
       "title": "The Picture of Dorian Gray",
       "author": "Oscar Wilde",
       "year": 1890,
@@ -128,7 +120,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "9",
       "title": "The Old Man and the Sea",
       "author": "Ernest Hemingway",
       "year": 1952,
@@ -138,7 +129,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "10",
       "title": "Wuthering Heights",
       "author": "Emily Brontë",
       "year": 1847,
@@ -148,7 +138,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "11",
       "title": "The Grapes of Wrath",
       "author": "John Steinbeck",
       "year": 1939,
@@ -158,7 +147,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "12",
       "title": "A Game of Thrones",
       "author": "George R. R. Martin",
       "year": 1996,
@@ -168,7 +156,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "13",
       "title": "A Clash of Kings",
       "author": "George R. R. Martin",
       "year": 1999,
@@ -178,7 +165,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "14",
       "title": "A Storm of Swords",
       "author": "George R. R. Martin",
       "year": 2000,
@@ -188,7 +174,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "15",
       "title": "A Feast for Crows",
       "author": "George R. R. Martin",
       "year": 2005,
@@ -198,7 +183,6 @@
       "coverPhoto": "./default.jpg"
     },
     {
-      "_id": "16",
       "title": "A Dance with Dragons",
       "author": "George R. R. Martin",
       "year": 2011,
@@ -210,11 +194,7 @@
   ],
   "loans": [
     {
-      "id": "1",
-      "loanDate": 1672527600,
-      "dueDate": 1673132400,
-      "endDate": 1672873200,
-      "book": "1",
+      "book": "A Dance with Dragons",
       "user": "main_guy"
     }
   ]
