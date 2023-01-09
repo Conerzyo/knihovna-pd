@@ -6,6 +6,7 @@
       "socialNumber": "5530133f6494h",
       "address": "3243 Cedar Street, California, USA",
       "username": "main_guy",
+      "loanCount": 0,
       "active": true,
       "admin": true
     },
@@ -15,6 +16,7 @@
       "socialNumber": "1874715a1848d",
       "address": "4156 Snider Street, 801112, Colorado, USA",
       "username": "puffy_bear69",
+      "loanCount": 0,
       "active": true,
       "admin": false
     },
@@ -24,6 +26,7 @@
       "socialNumber": "2957112c3827e",
       "address": "9673 Oak Street, Vermont, USA",
       "username": "emilyj_the_dramaqueen",
+      "loanCount": 0,
       "active": true,
       "admin": false
     },
@@ -33,6 +36,7 @@
       "socialNumber": "3748119d4716f",
       "address": "7541 Maple Avenue, New York, USA",
       "username": "mikew_the_jokester",
+      "loanCount": 0,
       "active": false,
       "admin": false
     },
@@ -42,6 +46,7 @@
       "socialNumber": "4639226e5605g",
       "address": "5342 Pine Street, Texas, USA",
       "username": "jessb_the_bookworm",
+      "loanCount": 0,
       "active": false,
       "admin": false
     }
@@ -194,8 +199,8 @@
   ],
   "loans": [
     {
-      "book": "A Dance with Dragons",
-      "user": "main_guy"
+      "title": "Catch-22",
+      "username": "main_guy"
     }
   ]
 }
