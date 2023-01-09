@@ -12,10 +12,9 @@ class DatabaseConnection:
         self.client = MongoClient(connection_string)
 
     def drop_databases(self):
-        #self.client.drop_database(self.database_name)
-        #self.client[self.database_name].drop_collection(self.books_collection_name)
-        #self.client[self.database_name].drop_collection(self.users_collection_name)
-        #self.client[self.database_name].drop_collection(self.loans_collection_name)
+        self.client[self.database_name].drop_collection(self.books_collection_name)
+        self.client[self.database_name].drop_collection(self.users_collection_name)
+        self.client[self.database_name].drop_collection(self.loans_collection_name)
         return
 
     def add_book_structure(self, book):
