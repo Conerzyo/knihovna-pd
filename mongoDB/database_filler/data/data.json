@@ -6,7 +6,7 @@
       "socialNumber": "5530133f6494h",
       "address": "3243 Cedar Street, California, USA",
       "username": "main_guy",
-      "loanCount": 0,
+      "password": "1234",
       "active": true,
       "admin": true
     },
@@ -16,7 +16,7 @@
       "socialNumber": "1874715a1848d",
       "address": "4156 Snider Street, 801112, Colorado, USA",
       "username": "puffy_bear69",
-      "loanCount": 0,
+      "password": "1234",
       "active": true,
       "admin": false
     },
@@ -26,7 +26,7 @@
       "socialNumber": "2957112c3827e",
       "address": "9673 Oak Street, Vermont, USA",
       "username": "emilyj_the_dramaqueen",
-      "loanCount": 0,
+      "password": "1234",
       "active": true,
       "admin": false
     },
@@ -36,7 +36,7 @@
       "socialNumber": "3748119d4716f",
       "address": "7541 Maple Avenue, New York, USA",
       "username": "mikew_the_jokester",
-      "loanCount": 0,
+      "password": "1234",
       "active": false,
       "admin": false
     },
@@ -46,7 +46,7 @@
       "socialNumber": "4639226e5605g",
       "address": "5342 Pine Street, Texas, USA",
       "username": "jessb_the_bookworm",
-      "loanCount": 0,
+      "password": "1234",
       "active": false,
       "admin": false
     }
@@ -58,7 +58,6 @@
       "year": 1961,
       "pages": 520,
       "countOverall": 5,
-      "countAvailable": 5,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -67,7 +66,6 @@
       "year": 1960,
       "pages": 281,
       "countOverall": 10,
-      "countAvailable": 10,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -76,7 +74,6 @@
       "year": 1925,
       "pages": 180,
       "countOverall": 7,
-      "countAvailable": 7,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -85,7 +82,6 @@
       "year": 1967,
       "pages": 417,
       "countOverall": 12,
-      "countAvailable": 11,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -94,7 +90,6 @@
       "year": 1851,
       "pages": 704,
       "countOverall": 9,
-      "countAvailable": 9,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -103,7 +98,6 @@
       "year": 1813,
       "pages": 279,
       "countOverall": 8,
-      "countAvailable": 8,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -112,7 +106,6 @@
       "year": 1951,
       "pages": 214,
       "countOverall": 10,
-      "countAvailable": 10,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -121,7 +114,6 @@
       "year": 1890,
       "pages": 254,
       "countOverall": 7,
-      "countAvailable": 7,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -130,7 +122,6 @@
       "year": 1952,
       "pages": 128,
       "countOverall": 6,
-      "countAvailable": 6,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -139,7 +130,6 @@
       "year": 1847,
       "pages": 346,
       "countOverall": 9,
-      "countAvailable": 9,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -148,7 +138,6 @@
       "year": 1939,
       "pages": 467,
       "countOverall": 11,
-      "countAvailable": 11,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -157,7 +146,6 @@
       "year": 1996,
       "pages": 694,
       "countOverall": 8,
-      "countAvailable": 8,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -166,7 +154,6 @@
       "year": 1999,
       "pages": 768,
       "countOverall": 9,
-      "countAvailable": 9,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -175,7 +162,6 @@
       "year": 2000,
       "pages": 992,
       "countOverall": 10,
-      "countAvailable": 10,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -184,7 +170,6 @@
       "year": 2005,
       "pages": 769,
       "countOverall": 11,
-      "countAvailable": 11,
       "coverPhoto": "./default.jpg"
     },
     {
@@ -193,7 +178,6 @@
       "year": 2011,
       "pages": 1040,
       "countOverall": 12,
-      "countAvailable": 12,
       "coverPhoto": "./default.jpg"
     }
   ],
