@@ -98,7 +98,14 @@ if __name__ == '__main__':
             print(f"User {not_active_user.username} was not activated")
 
         #edit user?
-        print("TODO")
+        to_edit_user = databaseConnection.get_user_by_username(new_user.username)
+        to_edit_user.address = "This address have been modified"
+        success = databaseConnection.edit_user(to_edit_user)
+
+        if success:
+            print(f"User {to_edit_user.username} was modified.")
+        else:
+            print(f"User {to_edit_user.username} was not modified")
 
         #data export !hash
         print("TODO")
@@ -106,11 +113,13 @@ if __name__ == '__main__':
         #data import !hash
         print("TODO")
 
-        #book search????
-        print("TODO")
+        #book search
+        books = databaseConnection.find_books(title="Catch-22")
+        print(f"Found {len(books)} with title Catch-22")
 
-        #user search???
-        print("TODO")
+        #user search
+        users = databaseConnection.find_users(first_name="Ladislav")
+        print(f"Found {len(users)} with name ladislav")
 
         #login
         logged_in_user_or_none = databaseConnection.login("main_guy", password_hash("1234"))

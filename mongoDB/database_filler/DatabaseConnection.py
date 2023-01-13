@@ -183,6 +183,31 @@ class DatabaseConnection:
         activate_query = {"$set": {"active": True}}
         return self.client[self.database_name][self.users_collection_name].update_one({"_id": user_id}, activate_query).acknowledged
 
+    def edit_user(self, user) -> bool:
+        query = {"$set": user.create_dict()}
+        return self.client[self.database_name][self.users_collection_name].update_one({"_id": user.id}, query).acknowledged
+
+    def find_books(self, title = None, author = None, year = None) -> [Book]:
+        query = {}
+        if title is not None:
+            query["title"] = title
+        if year is not None:
+            query["year"] = year
+        if author is not None:
+            query["author"] = author
+        return self.__get_books(query)
+
+    def find_users(self, first_name = None, last_name = None, address = None, social_number = None) -> [User]:
+        query = {}
+        if first_name is not None:
+            query["firstName"] = first_name
+        if last_name is not None:
+            query["lastName"] = last_name
+        if address is not None:
+            query["address"] = address
+        if social_number is not None:
+            query["socialNumber"] = social_number
+        return self.__get_users(query)
 
     def create_loan(self, loan) -> bool:
         book = self.get_book_by_id(loan.book_id)
@@ -226,6 +251,15 @@ class DatabaseConnection:
         book = Book()
         book.fill_from_dict(book_dict)
         return book
+    #todo remove repeating code
+    def __get_books(self, query) -> [Loan]:
+        all_books = []
+        cursor = self.client[self.database_name][self.books_collection_name].find(query)
+        for document in cursor:
+            book = Book()
+            book.fill_from_dict(document)
+            all_books.append(book)
+        return all_books
 
     def __get_loans(self, query) -> [Loan]:
         all_loans = []
