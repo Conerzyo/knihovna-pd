@@ -1,8 +1,10 @@
+import base64
 import hashlib
 import json
 import os
 
 from DatabaseConnection import User, Book, Loan
+from bson import json_util
 
 class MongoFiller:
     books_entry_name = "books"
@@ -10,16 +12,55 @@ class MongoFiller:
     loans_entry_name = "loans"
 
     def __init__(self, database_connection, data_file):
-        self.data_json_folder = os.path.dirname(data_file)
-        with open(data_file, 'r') as f:
-            self.data = json.load(f)
         self.database_connection = database_connection
 
-    def import_data(self):
+    #import from simple json
+    def __import_json_old(self, to_import):
         self.database_connection.clear_databases()
         self.__insert_books_from_json()
         self.__create_users_from_json()
         self.__create_loans_from_json()
+
+    #import from mongo json, this works with the exported data
+    def import_json(self, to_import):
+        self.database_connection.clear_databases()
+        self.data = to_import
+        for book in self.data[self.books_entry_name]:
+            book_dict = json_util.loads(book)
+            book = Book()
+            book.fill_from_dict(book_dict)
+            self.database_connection.create_book(book)
+
+        for user in self.data[self.users_entry_name]:
+            user_dict = json_util.loads(user)
+            user = User()
+            user.fill_from_dict(user_dict)
+            self.database_connection.create_user(user)
+
+        for loan in self.data[self.loans_entry_name]:
+            loan_dict = json_util.loads(loan)
+            loan = Loan()
+            loan.fill_from_dict(loan_dict)
+            self.database_connection.create_loan(loan)
+
+    def get_export_data(self):
+        output = {}
+        books = self.database_connection.get_all_books()
+        loans = self.database_connection.get_all_loans()
+        users = self.database_connection.get_all_users()
+
+        output[self.books_entry_name] = []
+        output[self.users_entry_name] = []
+        output[self.loans_entry_name] = []
+
+        for book in books:
+            book_dict = book.create_dict()
+            output[self.books_entry_name].append(json_util.dumps(book_dict))
+        for user in users:
+            output[self.users_entry_name].append(json_util.dumps(user.create_dict()))
+        for loan in loans:
+            output[self.loans_entry_name].append(json_util.dumps(loan.create_dict()))
+        return json.dumps(output)
 
     def __insert_books_from_json(self):
         for book_entry in self.data[self.books_entry_name]:

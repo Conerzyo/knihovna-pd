@@ -19,7 +19,8 @@ class User:
         self.admin = False
 
     def create_dict(self):
-        user_dict = {"firstName": self.first_name,
+        user_dict = {
+                     "firstName": self.first_name,
                      "lastName": self.last_name,
                      "socialNumber": self.social_number,
                      "address": self.address,
@@ -28,6 +29,8 @@ class User:
                      "loanCount": self.loan_count,
                      "active": self.active,
                      "admin": self.admin}
+        if self.id is not None:
+            user_dict["_id"] = self.id
         return user_dict
 
     def fill_from_dict(self, dict_entry):
@@ -56,13 +59,16 @@ class Book:
         self.cover_photo = None
 
     def create_dict(self):
-        user_dict = {"title": self.title,
+        user_dict = {
+                     "title": self.title,
                      "author": self.author,
                      "year": self.year,
                      "pages": self.pages,
                      "countOverall": self.count_overall,
                      "countAvailable": self.count_available,
                      "coverPhoto": self.cover_photo}
+        if self.id is not None:
+            user_dict["_id"] = self.id
         return user_dict
 
     def fill_from_dict(self, dict_entry):
@@ -87,9 +93,18 @@ class Loan:
         self.end_date = None
 
     def create_dict(self):
-        user_dict = {"bookId": self.book_id,
+        user_dict = {
+                     "bookId": self.book_id,
                      "userId": self.user_id
                      }
+        if self.id is not None:
+            user_dict["_id"] = self.id
+        if self.loan_date is not None:
+            user_dict["loanDate"] = self.loan_date
+        if self.due_date is not None:
+            user_dict["dueDate"] = self.due_date
+        if self.end_date is not None:
+            user_dict["endDate"] = self.end_date
         return user_dict
 
     def fill_from_dict(self, dict_entry):
@@ -208,6 +223,7 @@ class DatabaseConnection:
         if social_number is not None:
             query["socialNumber"] = social_number
         return self.__get_users(query)
+
 
     def create_loan(self, loan) -> bool:
         book = self.get_book_by_id(loan.book_id)

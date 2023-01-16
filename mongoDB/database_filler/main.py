@@ -1,6 +1,7 @@
 import argparse
 import traceback
 import hashlib
+import json
 
 from MongoFiller import MongoFiller
 from DatabaseConnection import DatabaseConnection, User, Loan
@@ -18,6 +19,7 @@ if __name__ == '__main__':
             description='Let\'s fill the DB!',
             epilog='or not.')
         parser.add_argument('--source_file', type=str)
+        parser.add_argument('--export_file', type=str)
         parser.add_argument("--connection_string", type=str)
 
         args = parser.parse_args()
@@ -25,8 +27,15 @@ if __name__ == '__main__':
         databaseConnection = DatabaseConnection(connection_string=args.connection_string)
 
         #database fill (reset)
-        filler = MongoFiller(database_connection=databaseConnection, data_file=args.source_file)
-        filler.import_data()
+        filler = MongoFiller(database_connection=databaseConnection)
+        with open(args.source_file, 'r') as f:
+            data = json.load(f)
+            filler.import_json(data)
+
+        #database export
+        json_string = filler.get_export_data()
+        with open(args.export_file, 'w') as outfile:
+            outfile.write(json_string)
 
         #registration
         new_user = User()
