@@ -1,6 +1,11 @@
 import hashlib
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+
 from flask import Flask, request
 from flask_restful import Api, Resource
+
 
 from mongoDB.database_filler.DatabaseConnection import User, Loan, Book
 
@@ -9,19 +14,21 @@ from Loan import LoanAPI
 from Book import BookAPI
 from Admin import AdminAPI
 import Authorization
-import connection_string
 
+dotenv_path = Path('connection_string.env')
+load_dotenv(dotenv_path=dotenv_path)
 
 app = Flask(__name__)
 app.secret_key = "test key"
 api = Api(app)
 auth = Authorization
 
+connection_str = os.getenv("connection_string")
 
-userApi = UserAPI(connection_string=connection_string.connection_string)
-loanApi = LoanAPI(connection_string=connection_string.connection_string)
-bookApi = BookAPI(connection_string=connection_string.connection_string)
-adminApi = AdminAPI(connection_string=connection_string.connection_string)
+userApi = UserAPI(connection_string=connection_str)
+loanApi = LoanAPI(connection_string=connection_str)
+bookApi = BookAPI(connection_string=connection_str)
+adminApi = AdminAPI(connection_string=connection_str)
 
 
 @app.route("/login", methods=["POST"])
