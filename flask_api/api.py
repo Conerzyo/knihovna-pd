@@ -9,6 +9,7 @@ from Loan import LoanAPI
 from Book import BookAPI
 from Admin import AdminAPI
 import Authorization
+import connection_string
 
 
 app = Flask(__name__)
@@ -16,12 +17,11 @@ app.secret_key = "test key"
 api = Api(app)
 auth = Authorization
 
-connection_string = ""
 
-userApi = UserAPI(connection_string=connection_string)
-loanApi = LoanAPI(connection_string=connection_string)
-bookApi = BookAPI(connection_string=connection_string)
-adminApi = AdminAPI(connection_string=connection_string)
+userApi = UserAPI(connection_string=connection_string.connection_string)
+loanApi = LoanAPI(connection_string=connection_string.connection_string)
+bookApi = BookAPI(connection_string=connection_string.connection_string)
+adminApi = AdminAPI(connection_string=connection_string.connection_string)
 
 
 @app.route("/login", methods=["POST"])
