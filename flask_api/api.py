@@ -68,7 +68,7 @@ def admin_exportDb():
 
 @app.route("/admin/activateUser", methods=["GET"])
 def admin_activateUser():
-    return {}
+    return userApi.activateUser(request.args.get("userId"))
 # ---------------------------------------------------------------- USER
 
 
@@ -134,13 +134,13 @@ def users_findUsers():
 @app.route("/books/create", methods=["POST"])
 def books_create():
     book = Book()
-    book.title = request.args.get("title")
-    book.author = request.args.get("author")
-    book.year = request.args.get("year")
-    book.pages = request.args.get("pages")
-    book.count_overall = request.args.get("countOverall")
-    book.count_available = request.args.get("countAvailable")
-    book.cover_photo = request.args.get("coverPhoto")
+    book.title = request.form.get("title")
+    book.author = request.form.get("author")
+    book.year = request.form.get("year")
+    book.pages = request.form.get("pages")
+    book.count_overall = request.form.get("countOverall")
+    book.count_available = request.form.get("countAvailable")
+    book.cover_photo = request.form.get("coverPhoto")
 
 
 @app.route("/books/getByTitle", methods=["GET"])
@@ -170,8 +170,8 @@ def books_findBooks():
 @app.route("/loans/create", methods=["POST"])
 def loans_create():
     loan = Loan()
-    loan.user_id = request.args.get("userId")
-    loan.book_id = request.args.get("bookId")
+    loan.user_id = request.form.get("userId")
+    loan.book_id = request.form.get("bookId")
 
 
 @app.route("/loans/getByUserId", methods=["GET"])

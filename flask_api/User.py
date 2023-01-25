@@ -32,7 +32,11 @@ class UserAPI:
         return self.toJson()
 
     def create(self, user):
-        return self.db.create_user(user=user)
+        return self.db.create_user(user)
+
+    def activateUser(self, userId):
+        self.db.activate_user(ObjectId(userId))
+        return {}
 
     def edit(self, userId, user):
         user_db = self.db.get_user_by_id(ObjectId(userId))
@@ -47,14 +51,23 @@ class UserAPI:
         if user.hash is not None:
             user_db.hash = user.hash
 
-        return self.db.edit_user(user=user_db)
+        return self.db.edit_user(user_db)
 
     def findUsers(self, first_name, last_name, address, social_number, sort_by):
+        sort = UserSort.FIRST_NAME
+
+        if sort_by == "lastName":
+            sort = UserSort.LAST_NAME
+        if sort_by == "address":
+            sort = UserSort.ADDRESS
+        if sort_by == "socialNumber":
+            sort = UserSort.SOCIAL_NUMBER
+
         self.users = self.db.find_users(first_name=first_name,
                                         last_name=last_name,
                                         address=address,
                                         social_number=social_number,
-                                        user_sort=UserSort.FIRST_NAME)
+                                        user_sort=sort)
 
         return self.toJson()
 
