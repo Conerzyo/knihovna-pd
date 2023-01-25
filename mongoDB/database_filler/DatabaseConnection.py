@@ -1,8 +1,16 @@
 import hashlib
 import time
+from enum import Enum
 from typing import Optional
 
 from pymongo import MongoClient
+
+
+class UserSort(Enum):
+    FIRST_NAME = "firstName"
+    LAST_NAME = "lastName"
+    ADDRESS = "address"
+    SOCIAL_NUMBER = "socialNumber"
 
 
 class User:
@@ -20,15 +28,15 @@ class User:
 
     def create_dict(self):
         user_dict = {
-                     "firstName": self.first_name,
-                     "lastName": self.last_name,
-                     "socialNumber": self.social_number,
-                     "address": self.address,
-                     "username": self.username,
-                     "hash": self.hash,
-                     "loanCount": self.loan_count,
-                     "active": self.active,
-                     "admin": self.admin}
+            "firstName": self.first_name,
+            "lastName": self.last_name,
+            "socialNumber": self.social_number,
+            "address": self.address,
+            "username": self.username,
+            "hash": self.hash,
+            "loanCount": self.loan_count,
+            "active": self.active,
+            "admin": self.admin}
         if self.id is not None:
             user_dict["_id"] = self.id
         return user_dict
@@ -60,13 +68,13 @@ class Book:
 
     def create_dict(self):
         user_dict = {
-                     "title": self.title,
-                     "author": self.author,
-                     "year": self.year,
-                     "pages": self.pages,
-                     "countOverall": self.count_overall,
-                     "countAvailable": self.count_available,
-                     "coverPhoto": self.cover_photo}
+            "title": self.title,
+            "author": self.author,
+            "year": self.year,
+            "pages": self.pages,
+            "countOverall": self.count_overall,
+            "countAvailable": self.count_available,
+            "coverPhoto": self.cover_photo}
         if self.id is not None:
             user_dict["_id"] = self.id
         return user_dict
@@ -94,9 +102,9 @@ class Loan:
 
     def create_dict(self):
         user_dict = {
-                     "bookId": self.book_id,
-                     "userId": self.user_id
-                     }
+            "bookId": self.book_id,
+            "userId": self.user_id
+        }
         if self.id is not None:
             user_dict["_id"] = self.id
         if self.loan_date is not None:
@@ -188,7 +196,8 @@ class DatabaseConnection:
         end_date_set = {"$set": {"endDate": int(time.time() * 1000)}}
         if loan.end_date is not None:
             return False
-        return self.client[self.database_name][self.loans_collection_name].update_one({"_id": loan.id}, end_date_set).acknowledged
+        return self.client[self.database_name][self.loans_collection_name].update_one({"_id": loan.id},
+                                                                                      end_date_set).acknowledged
 
     def activate_user(self, user_id) -> False:
         user = self.get_user_by_id(user_id)
@@ -196,13 +205,15 @@ class DatabaseConnection:
             print(f"User {user.username} is already activated")
             return False
         activate_query = {"$set": {"active": True}}
-        return self.client[self.database_name][self.users_collection_name].update_one({"_id": user_id}, activate_query).acknowledged
+        return self.client[self.database_name][self.users_collection_name].update_one({"_id": user_id},
+                                                                                      activate_query).acknowledged
 
     def edit_user(self, user) -> bool:
         query = {"$set": user.create_dict()}
-        return self.client[self.database_name][self.users_collection_name].update_one({"_id": user.id}, query).acknowledged
+        return self.client[self.database_name][self.users_collection_name].update_one({"_id": user.id},
+                                                                                      query).acknowledged
 
-    def find_books(self, title = None, author = None, year = None) -> [Book]:
+    def find_books(self, title=None, author=None, year=None) -> [Book]:
         query = {}
         if title is not None:
             query["title"] = title
@@ -212,7 +223,7 @@ class DatabaseConnection:
             query["author"] = author
         return self.__get_books(query)
 
-    def find_users(self, first_name = None, last_name = None, address = None, social_number = None) -> [User]:
+    def find_users(self, first_name=None, last_name=None, address=None, social_number=None, user_sort=None) -> [User]:
         query = {}
         if first_name is not None:
             query["firstName"] = first_name
@@ -222,8 +233,7 @@ class DatabaseConnection:
             query["address"] = address
         if social_number is not None:
             query["socialNumber"] = social_number
-        return self.__get_users(query)
-
+        return self.__get_users(query, user_sort)
 
     def create_loan(self, loan) -> bool:
         book = self.get_book_by_id(loan.book_id)
@@ -267,7 +277,8 @@ class DatabaseConnection:
         book = Book()
         book.fill_from_dict(book_dict)
         return book
-    #todo remove repeating code
+
+    # todo remove repeating code
     def __get_books(self, query) -> [Loan]:
         all_books = []
         cursor = self.client[self.database_name][self.books_collection_name].find(query)
@@ -286,9 +297,14 @@ class DatabaseConnection:
             all_loans.append(loan)
         return all_loans
 
-    def __get_users(self, query) -> [User]:
+    def __get_users(self, query, sort_type=None) -> [User]:
         all_users = []
-        cursor = self.client[self.database_name][self.users_collection_name].find(query)
+        cursor = None
+        if sort_type is None:
+            cursor = self.client[self.database_name][self.users_collection_name].find(query)
+        else:
+            cursor = self.client[self.database_name][self.users_collection_name].find(query).sort(sort_type.value)
+
         for document in cursor:
             user = User()
             user.fill_from_dict(document)

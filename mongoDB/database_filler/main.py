@@ -4,7 +4,7 @@ import hashlib
 import json
 
 from MongoFiller import MongoFiller
-from DatabaseConnection import DatabaseConnection, User, Loan
+from DatabaseConnection import DatabaseConnection, User, Loan, UserSort
 
 
 def password_hash( password):
@@ -127,7 +127,7 @@ if __name__ == '__main__':
         print(f"Found {len(books)} with title Catch-22")
 
         #user search
-        users = databaseConnection.find_users(first_name="Ladislav")
+        users = databaseConnection.find_users(first_name="Ladislav", user_sort=UserSort.LAST_NAME)
         print(f"Found {len(users)} with name ladislav")
 
         #login
