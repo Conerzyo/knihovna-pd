@@ -7,12 +7,12 @@ from flask import Flask, request
 from flask_restful import Api, Resource
 
 
-from mongoDB.database_filler.DatabaseConnection import User, Loan, Book
+from DatabaseConnection import DatabaseConnection, User, Loan, Book
+from MongoFiller import MongoFiller
 
 from User import UserAPI
 from Loan import LoanAPI
 from Book import BookAPI
-from Admin import AdminAPI
 import Authorization
 
 dotenv_path = Path('connection_string.env')
@@ -28,12 +28,11 @@ connection_str = os.getenv("connection_string")
 userApi = UserAPI(connection_string=connection_str)
 loanApi = LoanAPI(connection_string=connection_str)
 bookApi = BookAPI(connection_string=connection_str)
-adminApi = AdminAPI(connection_string=connection_str)
 
 
 def password_hash(password):
     hasher = hashlib.md5()
-    hasher.update(password)
+    hasher.update(password.encode('utf-8'))
     return hasher.hexdigest()
 
 
@@ -50,12 +49,21 @@ def logout():
 
 @app.route("/admin/importDb", methods=["POST"])
 def admin_importDb():
+
+
+    inputfile = open("export.json", 'w')
+    filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=inputfile)
+    filler.import_json()
     return {}
 
 
-@app.route("/admin/exportDb", methods=["POST"])
+@app.route("/admin/exportDb", methods=["GET"])
 def admin_exportDb():
-    return {}
+    outfile = open("export.json", 'w')
+    filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=outfile)
+    json_string = filler.get_export_data()
+
+    return json_string
 
 
 @app.route("/admin/activateUser", methods=["GET"])
@@ -75,18 +83,22 @@ def users_create():
     user.hash = password_hash(request.form.get("password"))
     userApi.create(user)
 
+    return {}
+
 
 @app.route("/users/editUser", methods=["POST"])
 def users_editUser():
     user = User()
-    user.username = request.args.get("username")
-    user.hash = hashlib.md5(request.args.get("password").encode())
-    user.first_name = request.args.get("firstName")
-    user.last_name = request.args.get("lastName")
-    user.social_number = request.args.get("socialNumber")
-    user.address = request.args.get("address")
-    userApi.create(request.args.get("name"))
+    userId = request.form.get("userId")
 
+    user.first_name = request.form.get("firstName")
+    user.last_name = request.form.get("lastName")
+    user.social_number = request.form.get("socialNumber")
+    user.address = request.form.get("address")
+    user.hash = password_hash(request.form.get("password"))
+
+    userApi.edit(userId=userId, user=user)
+    return {}
 
 @app.route("/users/getByName", methods=["GET"])
 def users_getByName():
@@ -103,15 +115,19 @@ def users_getAll():
     return userApi.getAllUsers()
 
 
-@app.route("/users/findUser", methods=["GET"])
-def users_findUser():
+@app.route("/users/findUsers", methods=["GET"])
+def users_findUsers():
     first_name = request.args.get("firstName")
     last_name = request.args.get("lastName")
     address = request.args.get("address")
     social_number = request.args.get("socialNumber")
     sort_by = request.args.get("sortBy")
 
-    return userApi.findUser(first_name=first_name, last_name=last_name, address=address, social_number=social_number)
+    return userApi.findUsers(first_name=first_name,
+                             last_name=last_name,
+                             address=address,
+                             social_number=social_number,
+                             sort_by=sort_by)
 # ---------------------------------------------------------------- BOOK
 
 

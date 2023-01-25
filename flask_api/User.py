@@ -1,6 +1,7 @@
-from mongoDB.database_filler.DatabaseConnection import DatabaseConnection
+from DatabaseConnection import DatabaseConnection, UserSort
 
 from bson import ObjectId
+
 
 class UserAPI:
 
@@ -33,8 +34,29 @@ class UserAPI:
     def create(self, user):
         return self.db.create_user(user=user)
 
-    def findUser(self, first_name, last_name, address, social_number):
-        return {}
+    def edit(self, userId, user):
+        user_db = self.db.get_user_by_id(ObjectId(userId))
+        if user.first_name is not None:
+            user_db.first_name = user.first_name
+        if user.last_name is not None:
+            user_db.last_name = user.last_name
+        if user.social_number is not None:
+            user_db.social_number = user.social_number
+        if user.address is not None:
+            user_db.address = user.address
+        if user.hash is not None:
+            user_db.hash = user.hash
+
+        return self.db.edit_user(user=user_db)
+
+    def findUsers(self, first_name, last_name, address, social_number, sort_by):
+        self.users = self.db.find_users(first_name=first_name,
+                                        last_name=last_name,
+                                        address=address,
+                                        social_number=social_number,
+                                        user_sort=UserSort.FIRST_NAME)
+
+        return self.toJson()
 
     def toJson(self):
         user_list = []
