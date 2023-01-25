@@ -31,12 +31,18 @@ bookApi = BookAPI(connection_string=connection_str)
 adminApi = AdminAPI(connection_string=connection_str)
 
 
+def password_hash(password):
+    hasher = hashlib.md5()
+    hasher.update(password)
+    return hasher.hexdigest()
+
+
 @app.route("/login", methods=["POST"])
 def login():
     return auth.login()
 
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["GET"])
 def logout():
     return auth.logout()
 # ---------------------------------------------------------------- ADMIN
@@ -52,13 +58,8 @@ def admin_exportDb():
     return {}
 
 
-@app.route("/admin/activateUser", methods=["POST"])
+@app.route("/admin/activateUser", methods=["GET"])
 def admin_activateUser():
-    return {}
-
-
-@app.route("/admin/editUser", methods=["POST"])
-def admin_editUser():
     return {}
 # ---------------------------------------------------------------- USER
 
@@ -66,8 +67,20 @@ def admin_editUser():
 @app.route("/users/create", methods=["POST"])
 def users_create():
     user = User()
+    user.username = request.form.get("username")
+    user.first_name = request.form.get("firstName")
+    user.last_name = request.form.get("lastName")
+    user.social_number = request.form.get("socialNumber")
+    user.address = request.form.get("address")
+    user.hash = password_hash(request.form.get("password"))
+    userApi.create(user)
+
+
+@app.route("/users/editUser", methods=["POST"])
+def users_editUser():
+    user = User()
     user.username = request.args.get("username")
-    user.hash = hashlib.sha256(request.args.get("password").encode())
+    user.hash = hashlib.md5(request.args.get("password").encode())
     user.first_name = request.args.get("firstName")
     user.last_name = request.args.get("lastName")
     user.social_number = request.args.get("socialNumber")
@@ -88,6 +101,17 @@ def users_getById():
 @app.route("/users/getAll", methods=["GET"])
 def users_getAll():
     return userApi.getAllUsers()
+
+
+@app.route("/users/findUser", methods=["GET"])
+def users_findUser():
+    first_name = request.args.get("firstName")
+    last_name = request.args.get("lastName")
+    address = request.args.get("address")
+    social_number = request.args.get("socialNumber")
+    sort_by = request.args.get("sortBy")
+
+    return userApi.findUser(first_name=first_name, last_name=last_name, address=address, social_number=social_number)
 # ---------------------------------------------------------------- BOOK
 
 
@@ -103,42 +127,50 @@ def books_create():
     book.cover_photo = request.args.get("coverPhoto")
 
 
-@app.route("/books/getByName", methods=["POST"])
-def books_getByName():
-    return bookApi.getByName(request.args.get("name"))
+@app.route("/books/getByTitle", methods=["GET"])
+def books_getByTitle():
+    return bookApi.getByTitle(request.args.get("title"))
 
 
-@app.route("/books/getById", methods=["POST"])
+@app.route("/books/getById", methods=["GET"])
 def books_getById():
     return bookApi.getById(request.args.get("id"))
 
 
-@app.route("/books/getAll", methods=["POST"])
+@app.route("/books/getAll", methods=["GET"])
 def books_getAll():
     return bookApi.getAllBooks()
+
+@app.route("/books/findBook", methods=["GET"])
+def books_findBooks():
+    title = request.args.get("title")
+    year = request.args.get("year")
+    author = request.args.get("author")
+
+    return bookApi.findBook(title=title, year=year, author=author)
 # ---------------------------------------------------------------- LOAN
 
 
 @app.route("/loans/create", methods=["POST"])
 def loans_create():
     loan = Loan()
-    loan.title = request.args.get("title")
-    loan.author = request.args.get("author")
+    loan.user_id = request.args.get("userId")
+    loan.book_id = request.args.get("bookId")
 
 
-@app.route("/loans/getByName", methods=["POST"])
-def loans_getByName():
-    return loanApi.getByName(request.args.get("name"))
+@app.route("/loans/getByUserId", methods=["GET"])
+def loans_getByUserId():
+    return loanApi.getByUserId(request.args.get("id"))
 
 
-@app.route("/loans/getById", methods=["POST"])
-def loans_getById():
-    return loanApi.getById(request.args.get("id"))
+@app.route("/loans/getActiveLoans", methods=["GET"])
+def loans_getActiveLoans():
+    return loanApi.getActiveLoans(request.args.get("id"))
 
 
-@app.route("/loans/getAll", methods=["POST"])
+@app.route("/loans/getAll", methods=["GET"])
 def loans_getAll():
-    return loanApi.getAllBooks()
+    return loanApi.getAllLoans()
 
 
 if __name__ == "__main__":

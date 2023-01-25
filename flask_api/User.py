@@ -1,7 +1,8 @@
 from mongoDB.database_filler.DatabaseConnection import DatabaseConnection
 
+from bson import ObjectId
 
-class UserAPI():
+class UserAPI:
 
     def __init__(self, connection_string):
         self.db = DatabaseConnection(connection_string=connection_string)
@@ -17,7 +18,7 @@ class UserAPI():
             return {}
 
     def getById(self, userId):
-        usr = self.db.get_user_by_id(userId)
+        usr = self.db.get_user_by_id(ObjectId(userId))
 
         if usr:
             self.users.append(usr)
@@ -32,6 +33,9 @@ class UserAPI():
     def create(self, user):
         return self.db.create_user(user=user)
 
+    def findUser(self, first_name, last_name, address, social_number):
+        return {}
+
     def toJson(self):
         user_list = []
         for user in self.users:
@@ -43,7 +47,8 @@ class UserAPI():
                 "address": user.address,
                 "username": user.username,
                 "loanCount": user.loan_count,
-                "active": user.active})
+                "active": user.active,
+                "admin": user.admin})
 
         self.users = []
 
