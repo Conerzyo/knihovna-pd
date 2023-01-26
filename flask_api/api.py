@@ -21,7 +21,7 @@ load_dotenv(dotenv_path=dotenv_path)
 app = Flask(__name__)
 app.secret_key = "test key"
 api = Api(app)
-CORS(app)
+CORS(app, supports_credentials=True)
 auth = Authorization
 
 connection_str = os.getenv("connection_string")
