@@ -14,7 +14,7 @@ class UserAPI:
 
         if usr:
             self.users.append(usr)
-            return self.toJson()
+            return usr
         else:
             return {}
 
@@ -24,6 +24,14 @@ class UserAPI:
         if usr:
             self.users.append(usr)
             return self.toJson()
+        else:
+            return {}
+
+    def getIdByName(self, name):
+        usr = self.db.get_user_by_username(name)
+
+        if usr:
+            return str(usr.id)
         else:
             return {}
 

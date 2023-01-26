@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-from flask import Flask, request
+from flask import Flask, request, send_file
 from flask_restful import Api, Resource
 
 
@@ -38,40 +38,57 @@ def password_hash(password):
 
 @app.route("/login", methods=["POST"])
 def login():
-    auth.login()
+    if auth.isLoggedIn():
+        return {"loged": auth.isLoggedIn()}
 
     username = request.form.get("username")
     password = password_hash(request.form.get("password"))
 
-    return userApi.login(username, password)
+    user = userApi.login(username, password)
+    if user:
+        auth.login(auth, user=user)
+        return {"id": str(user.id)}
+    else:
+        return {"error": "Wrong login"}, 401
 
 
 @app.route("/logout", methods=["GET"])
 def logout():
     auth.logout()
-    return {}
+    return {"loged out": "true"}
 # ---------------------------------------------------------------- ADMIN
 
 
 @app.route("/admin/importDb", methods=["POST"])
 def admin_importDb():
-    inputfile = open("export.json", 'w')
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
+    inputfile = open("export.json", 'r')
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=inputfile)
-    filler.import_json()
+    filler.import_json(inputfile.read())
+    inputfile.close()
     return {}
 
 
 @app.route("/admin/exportDb", methods=["GET"])
 def admin_exportDb():
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
     outfile = open("export.json", 'w')
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=outfile)
     json_string = filler.get_export_data()
 
-    return json_string
+    return send_file(outfile, mimetype='application/json')
+
 
 
 @app.route("/admin/activateUser", methods=["GET"])
 def admin_activateUser():
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
     return userApi.activateUser(request.args.get("userId"))
 # ---------------------------------------------------------------- USER
 
@@ -95,6 +112,9 @@ def users_editUser():
     user = User()
     userId = request.form.get("userId")
 
+    if (not auth.isAdmin()) or (not auth.isLoggedIn() == userId):
+        return {"error": "Unauthorized- login"}, 401
+
     user.first_name = request.form.get("firstName")
     user.last_name = request.form.get("lastName")
     user.social_number = request.form.get("socialNumber")
@@ -106,21 +126,36 @@ def users_editUser():
 
 @app.route("/users/getByName", methods=["GET"])
 def users_getByName():
+    userId = userApi.getIdByName(request.args.get("name"))
+
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == userId):
+        return {"error": "Unauthorized- login"}, 401
+
     return userApi.getByName(request.args.get("name"))
 
 
 @app.route("/users/getById", methods=["GET"])
 def users_getById():
-    return userApi.getById(request.args.get("id"))
+    userId = request.args.get("id")
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == userId):
+        return {"error": "Unauthorized- login"}, 401
+
+    return userApi.getById(userId)
 
 
 @app.route("/users/getAll", methods=["GET"])
 def users_getAll():
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
     return userApi.getAllUsers()
 
 
 @app.route("/users/findUsers", methods=["GET"])
 def users_findUsers():
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
     first_name = request.args.get("firstName")
     last_name = request.args.get("lastName")
     address = request.args.get("address")
@@ -137,6 +172,9 @@ def users_findUsers():
 
 @app.route("/books/create", methods=["POST"])
 def books_create():
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
     book = Book()
     book.title = request.form.get("title")
     book.author = request.form.get("author")
@@ -145,6 +183,9 @@ def books_create():
     book.count_overall = request.form.get("countOverall")
     book.count_available = request.form.get("countAvailable")
     book.cover_photo = request.form.get("coverPhoto")
+    bookApi.create(book)
+
+    return {}
 
 
 @app.route("/books/getByTitle", methods=["GET"])
@@ -160,6 +201,14 @@ def books_getById():
 @app.route("/books/getAll", methods=["GET"])
 def books_getAll():
     return bookApi.getAllBooks()
+
+
+@app.route("/books/getCoverPicture", methods=["GET"])
+def books_getCoverPicture():
+    picture = bookApi.getPicture(request.args.get("id"))
+    newFile = open("picture.jpg", "wb")
+    newFile.write(picture)
+    return send_file(newFile, mimetype='image/jpeg')
 
 
 @app.route("/books/uploadPicture", methods=["GET"])
@@ -179,23 +228,40 @@ def books_findBooks():
 
 @app.route("/loans/create", methods=["POST"])
 def loans_create():
+    userId = request.form.get("userId")
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == userId):
+        return {"error": "Unauthorized- login"}, 401
+
     loan = Loan()
-    loan.user_id = request.form.get("userId")
+    loan.user_id = userId
     loan.book_id = request.form.get("bookId")
+    loanApi.create(loan)
+    return {}
 
 
 @app.route("/loans/getByUserId", methods=["GET"])
 def loans_getByUserId():
-    return loanApi.getByUserId(request.args.get("id"))
+    userId = request.args.get("id")
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == userId):
+        return {"error": "Unauthorized- login"}, 401
+
+    return loanApi.getByUserId(userId)
 
 
 @app.route("/loans/getActiveLoans", methods=["GET"])
 def loans_getActiveLoans():
-    return loanApi.getActiveLoans(request.args.get("id"))
+    userId = request.args.get("id")
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == userId):
+        return {"error": "Unauthorized- login"}, 401
+
+    return loanApi.getActiveLoans(userId)
 
 
 @app.route("/loans/getAll", methods=["GET"])
 def loans_getAll():
+    if not auth.isAdmin():
+        return {"error": "Unauthorized - admin"}, 401
+
     return loanApi.getAllLoans()
 
 

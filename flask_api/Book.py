@@ -33,6 +33,11 @@ class BookAPI:
     def create(self, book):
         return self.db.create_book(book=book)
 
+    def getPicture(self, bookId):
+        book = Book
+        book = self.db.get_book_by_id(ObjectId(bookId))
+        return book.cover_photo
+
     def uploadPicture(self, book):
         return self.db.create_book(book=book)
 
