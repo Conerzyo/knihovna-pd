@@ -1,23 +1,27 @@
 import Link from "next/link";
+import { useState } from "react";
+import { Header } from "../components/header/Header";
+import { User } from "../models/user";
+import { getUser } from "../utils/userCache";
 
 export default function Home() {
+  const [user, setUser] = useState<User | null>(getUser());
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
-    <div style={containerStyles}>
-      <div>Knihovna PD</div>
-      <div style={innerHeader}>
-        <div>Logged user</div>
-        <Link href="/login">Login</Link>
-      </div>
-    </div>
+    <>
+      <Header user={user} logout={handleLogout} />
+      <div style={bodyContainer}>Body</div>
+    </>
   );
 }
 
-const containerStyles = {
+const bodyContainer: any = {
+  maxWidth: "85%",
   display: "flex",
-  justifyContent: "space-between",
-  padding: "8px 12px",
-};
-
-const innerHeader = {
-  display: "flex",
+  flexDirection: "flex-column",
+  margin: "32px",
 };
