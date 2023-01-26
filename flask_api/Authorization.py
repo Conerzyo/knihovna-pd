@@ -6,17 +6,17 @@ def login():
     if request.method == "POST":
         session.permanent = True
         session["user"] = "TEST USER"
-        return "OK"
+        return True
     else:
         if "user" in session:
-            return "OK"
+            return True
 
-        return "NOK"
+        return False
 
 
 def logout():
     session.pop("user", None)
-    return "LOGOUT"
+    return True
 
 
 def isLoggedIn():

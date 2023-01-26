@@ -33,8 +33,14 @@ class BookAPI:
     def create(self, book):
         return self.db.create_book(book=book)
 
+    def uploadPicture(self, book):
+        return self.db.create_book(book=book)
+
     def findBook(self, title, year, author):
-        return {}
+        self.books = self.db.find_books(title=title,
+                                        year=year,
+                                        author=author)
+        return self.toJson()
 
     def toJson(self):
         book_list = []

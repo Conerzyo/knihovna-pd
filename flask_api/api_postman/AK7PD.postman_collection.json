@@ -10,64 +10,6 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "GetByName",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:5000/users/getByName?name=\"NAME\"",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"users",
-								"getByName"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "\"NAME\""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:5000/users/getById?id=\"ID\"",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"users",
-								"getById"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "\"ID\""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "GetAll",
 					"request": {
 						"method": "GET",
@@ -91,46 +33,216 @@
 					"response": []
 				},
 				{
+					"name": "GetByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/users/getByName?name=main_guy",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"getByName"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "main_guy"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/users/getById?id=63c54df7d9246dd7a7da7e9f",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"getById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "63c54df7d9246dd7a7da7e9f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/users/findUsers",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"findUsers"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Andrew",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Moore",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "3243 Cedar Street, California, USA",
+									"disabled": true
+								},
+								{
+									"key": "socialNumber",
+									"value": "5530133f6494h",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "firstName",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test_user",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "socialNumber",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "asdasdasd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/users/editUser",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"editUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "username",
-								"value": "test_user",
-								"type": "text"
-							},
-							{
-								"key": "password",
-								"value": "123",
-								"type": "text"
-							},
-							{
-								"key": "first_name",
-								"value": "test",
-								"type": "text"
-							},
-							{
-								"key": "last_name",
-								"value": "test",
-								"type": "text"
-							},
-							{
-								"key": "social_number",
-								"value": "123456789",
-								"type": "text"
-							},
-							{
-								"key": "address",
-								"value": "asdasdasd",
-								"type": "text"
-							},
-							{
-								"key": "name",
-								"value": "test",
-								"type": "text"
-							}
-						],
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test_user",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "socialNumber",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "asdasdasd",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/users/create",
 							"protocol": "http",
@@ -155,12 +267,12 @@
 			"name": "Books",
 			"item": [
 				{
-					"name": "GetByName",
+					"name": "GetAll",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/getByName",
+							"raw": "http://127.0.0.1:5000/books/getAll",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -170,8 +282,37 @@
 							],
 							"port": "5000",
 							"path": [
-								"users",
-								"getByName"
+								"books",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByTitle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/books/getByTitle?title=Catch-22",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"books",
+								"getByTitle"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Catch-22"
+								}
 							]
 						}
 					},
@@ -183,7 +324,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/getById",
+							"raw": "http://127.0.0.1:5000/books/getById?id=63c54df6d9246dd7a7da7e8f",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -193,20 +334,26 @@
 							],
 							"port": "5000",
 							"path": [
-								"users",
+								"books",
 								"getById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "63c54df6d9246dd7a7da7e8f"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GetAll",
+					"name": "FindUsers Copy",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/getAll",
+							"raw": "http://127.0.0.1:5000/users/findUsers",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -217,7 +364,34 @@
 							"port": "5000",
 							"path": [
 								"users",
-								"getAll"
+								"findUsers"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Andrew",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Moore",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "3243 Cedar Street, California, USA",
+									"disabled": true
+								},
+								{
+									"key": "socialNumber",
+									"value": "5530133f6494h",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "firstName",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -265,7 +439,40 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/create",
+							"raw": "http://127.0.0.1:5000/books/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"books",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UploadPicture",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "userId",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/users/editUser",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -276,7 +483,7 @@
 							"port": "5000",
 							"path": [
 								"users",
-								"create"
+								"editUser"
 							]
 						}
 					},
@@ -288,12 +495,12 @@
 			"name": "Loans",
 			"item": [
 				{
-					"name": "GetByName",
+					"name": "GetAll",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/loans/getByName",
+							"raw": "http://127.0.0.1:5000/loans/getAll",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -304,53 +511,65 @@
 							"port": "5000",
 							"path": [
 								"loans",
-								"getByName"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:5000/users/getById",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"users",
-								"getById"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:5000/users/getAll",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"users",
 								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/loans/getByUserId?userId=63c54df7d9246dd7a7da7e9f",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"loans",
+								"getByUserId"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "63c54df7d9246dd7a7da7e9f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetActiveLoans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/loans/getActiveLoans?userId",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"loans",
+								"getActiveLoans"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": null
+								}
 							]
 						}
 					},
@@ -398,7 +617,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/create",
+							"raw": "http://127.0.0.1:5000/loans/create",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -408,7 +627,7 @@
 							],
 							"port": "5000",
 							"path": [
-								"users",
+								"loans",
 								"create"
 							]
 						}
@@ -445,9 +664,16 @@
 				},
 				{
 					"name": "ImportDb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {}
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/admin/importDb",
 							"protocol": "http",
@@ -461,29 +687,6 @@
 							"path": [
 								"admin",
 								"importDb"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "EditUser",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:5000/admin/editUser",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"admin",
-								"editUser"
 							]
 						}
 					},
@@ -517,8 +720,23 @@
 		{
 			"name": "Login",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "main_guy",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
 				"url": {
 					"raw": "http://127.0.0.1:5000/login",
 					"protocol": "http",

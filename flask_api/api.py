@@ -49,8 +49,6 @@ def logout():
 
 @app.route("/admin/importDb", methods=["POST"])
 def admin_importDb():
-
-
     inputfile = open("export.json", 'w')
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=inputfile)
     filler.import_json()
@@ -62,6 +60,7 @@ def admin_exportDb():
     outfile = open("export.json", 'w')
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=outfile)
     json_string = filler.get_export_data()
+
 
     return json_string
 
@@ -157,7 +156,13 @@ def books_getById():
 def books_getAll():
     return bookApi.getAllBooks()
 
-@app.route("/books/findBook", methods=["GET"])
+
+@app.route("/books/uploadPicture", methods=["GET"])
+def books_getUploadPicture():
+    return {}
+
+
+@app.route("/books/findBooks", methods=["GET"])
 def books_findBooks():
     title = request.args.get("title")
     year = request.args.get("year")
