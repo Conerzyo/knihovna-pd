@@ -216,23 +216,23 @@ class DatabaseConnection:
     def find_books(self, title=None, author=None, year=None) -> [Book]:
         query = {}
         if title is not None:
-            query["title"] = title
+            query["title"] = {"$regex": title, "$options": 'i'}
         if year is not None:
             query["year"] = year
         if author is not None:
-            query["author"] = author
+            query["author"] = {"$regex": author, "$options": 'i'}
         return self.__get_books(query)
 
     def find_users(self, first_name=None, last_name=None, address=None, social_number=None, user_sort=None) -> [User]:
         query = {}
         if first_name is not None:
-            query["firstName"] = first_name
+            query["firstName"] = {"$regex": first_name, "$options": 'i'}
         if last_name is not None:
-            query["lastName"] = last_name
+            query["lastName"] = {"$regex": last_name, "$options": 'i'}
         if address is not None:
-            query["address"] = address
+            query["address"] = {"$regex": address, "$options": 'i'}
         if social_number is not None:
-            query["socialNumber"] = social_number
+            query["socialNumber"] = {"$regex": social_number, "$options": 'i'}
         return self.__get_users(query, user_sort)
 
     def create_loan(self, loan) -> bool:

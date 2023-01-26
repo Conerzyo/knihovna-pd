@@ -67,7 +67,6 @@ def admin_exportDb():
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=outfile)
     json_string = filler.get_export_data()
 
-
     return json_string
 
 
