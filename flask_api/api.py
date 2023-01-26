@@ -38,12 +38,18 @@ def password_hash(password):
 
 @app.route("/login", methods=["POST"])
 def login():
-    return auth.login()
+    auth.login()
+
+    username = request.form.get("username")
+    password = password_hash(request.form.get("password"))
+
+    return userApi.login(username, password)
 
 
 @app.route("/logout", methods=["GET"])
 def logout():
-    return auth.logout()
+    auth.logout()
+    return {}
 # ---------------------------------------------------------------- ADMIN
 
 

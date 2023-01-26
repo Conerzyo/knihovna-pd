@@ -9,6 +9,15 @@ class UserAPI:
         self.db = DatabaseConnection(connection_string=connection_string)
         self.users = []
 
+    def login(self, username, password):
+        usr = self.db.login(username, password)
+
+        if usr:
+            self.users.append(usr)
+            return self.toJson()
+        else:
+            return {}
+
     def getByName(self, name):
         usr = self.db.get_user_by_username(name)
 
