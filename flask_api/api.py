@@ -5,6 +5,7 @@ from pathlib import Path
 
 from flask import Flask, request, send_file
 from flask_restful import Api, Resource
+from flask_cors import CORS
 
 from DatabaseConnection import DatabaseConnection, User, Loan, Book
 from MongoFiller import MongoFiller
@@ -20,6 +21,7 @@ load_dotenv(dotenv_path=dotenv_path)
 app = Flask(__name__)
 app.secret_key = "test key"
 api = Api(app)
+CORS(app)
 auth = Authorization
 
 connection_str = os.getenv("connection_string")
