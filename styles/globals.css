@@ -24,3 +24,12 @@ a {
     background: black;
   }
 }
+
+.form-container {
+  display: "flex";
+  flex-direction: "column";
+  margin: "auto";
+  width: "25vw";
+  justify-content: "center";
+  height: "100vh";
+}

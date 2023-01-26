@@ -1,6 +1,6 @@
 export default function Login() {
   return (
-    <div style={containerStyles}>
+    <div className="form-container">
       <h1>Login</h1>
       <label htmlFor="username">Username</label>
       <input id="username" type="text" style={{ margin: "6px 0px" }} />
@@ -10,12 +10,3 @@ export default function Login() {
     </div>
   );
 }
-
-const containerStyles = {
-  display: "flex",
-  flexDirection: "column",
-  margin: "auto",
-  width: "25vw",
-  justifyContent: "center",
-  height: "100vh",
-};
