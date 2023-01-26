@@ -66,7 +66,7 @@ def admin_importDb():
         return {"error": "Unauthorized - admin"}, 401
 
     json_string = request.form.get("data")
-    # inputfile = open("export.json", 'r')
+    inputfile = open("export.json", 'r')
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=inputfile)
     filler.import_json(json_string)
     # filler.import_json(inputfile.read())
