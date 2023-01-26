@@ -6,7 +6,6 @@ from pathlib import Path
 from flask import Flask, request, send_file
 from flask_restful import Api, Resource
 
-
 from DatabaseConnection import DatabaseConnection, User, Loan, Book
 from MongoFiller import MongoFiller
 
@@ -56,6 +55,8 @@ def login():
 def logout():
     auth.logout()
     return {"loged out": "true"}
+
+
 # ---------------------------------------------------------------- ADMIN
 
 
@@ -64,10 +65,13 @@ def admin_importDb():
     if not auth.isAdmin():
         return {"error": "Unauthorized - admin"}, 401
 
-    inputfile = open("export.json", 'r')
+    json_string = request.form.get("data")
+    # inputfile = open("export.json", 'r')
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=inputfile)
-    filler.import_json(inputfile.read())
-    inputfile.close()
+    filler.import_json(json_string)
+    # filler.import_json(inputfile.read())
+    # inputfile.close()
+
     return {}
 
 
@@ -80,8 +84,8 @@ def admin_exportDb():
     filler = MongoFiller(database_connection=DatabaseConnection(connection_string=connection_str), data_file=outfile)
     json_string = filler.get_export_data()
 
-    return send_file(outfile, mimetype='application/json')
-
+    # return send_file(outfile, mimetype='application/json')
+    return json_string
 
 
 @app.route("/admin/activateUser", methods=["GET"])
@@ -90,6 +94,8 @@ def admin_activateUser():
         return {"error": "Unauthorized - admin"}, 401
 
     return userApi.activateUser(request.args.get("userId"))
+
+
 # ---------------------------------------------------------------- USER
 
 
@@ -123,6 +129,7 @@ def users_editUser():
 
     userApi.edit(userId=userId, user=user)
     return {}
+
 
 @app.route("/users/getByName", methods=["GET"])
 def users_getByName():
@@ -167,6 +174,8 @@ def users_findUsers():
                              address=address,
                              social_number=social_number,
                              sort_by=sort_by)
+
+
 # ---------------------------------------------------------------- BOOK
 
 
@@ -182,7 +191,6 @@ def books_create():
     book.pages = request.form.get("pages")
     book.count_overall = request.form.get("countOverall")
     book.count_available = request.form.get("countAvailable")
-    book.cover_photo = request.form.get("coverPhoto")
     bookApi.create(book)
 
     return {}
@@ -223,6 +231,8 @@ def books_findBooks():
     author = request.args.get("author")
 
     return bookApi.findBook(title=title, year=year, author=author)
+
+
 # ---------------------------------------------------------------- LOAN
 
 
