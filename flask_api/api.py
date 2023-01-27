@@ -41,7 +41,7 @@ def password_hash(password):
 @app.route("/login", methods=["POST"])
 def login():
     if auth.isLoggedIn():
-        return {"id": auth.isLoggedIn()}
+        return {"loged": auth.isLoggedIn()}
 
     username = request.form.get("username")
     password = password_hash(request.form.get("password"))
@@ -49,7 +49,7 @@ def login():
     user = userApi.login(username, password)
     if user:
         auth.login(auth, user=user)
-        return {"id": str(user.id)}
+        return {"loged": str(user.id)}
     else:
         return {"error": "Wrong login"}, 401
 
