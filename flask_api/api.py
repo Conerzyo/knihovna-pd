@@ -118,7 +118,7 @@ def users_create():
         new_user = userApi.getByName(user.username)
         return new_user
 
-    return {"error": "cannot create user"}, 401
+    return {"error": "cannot create user"}, 400
 
 
 @app.route("/users/editUser", methods=["POST"])
