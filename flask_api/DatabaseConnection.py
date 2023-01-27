@@ -183,7 +183,7 @@ class DatabaseConnection:
         return self.__get_users({})
 
     def get_all_loans_for_user(self, user_id) -> [Loan]:
-        return self.__get_loans({"userId": user_id})[0]
+        return self.__get_loans({"userId": user_id})
 
     def get_active_loans_for_user(self, user_id) -> [Loan]:
         active_loans = self.__get_loans({"userId": user_id, "endDate": {"$exists": False}})
