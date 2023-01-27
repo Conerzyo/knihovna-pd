@@ -5,11 +5,80 @@ import { SearchOptions } from "../../pages";
 type LoanListProps = {
   loans: Loan[] | null;
   handleEndLoan: (id: string) => void;
+  handleSearch: (searchOptions: SearchOptions | null) => void;
 };
 
-export const LoanList: FC<LoanListProps> = ({ loans, handleEndLoan }) => {
+export const LoanList: FC<LoanListProps> = ({
+  loans,
+  handleEndLoan,
+  handleSearch,
+}) => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedCriteria, setSelectedCriteria] = useState<string>("title");
+
+  const resetSearch = () => {
+    setSearchQuery("");
+    setSelectedCriteria("title");
+
+    handleSearch(null);
+  };
+
+  const handleChange = (event: any) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", minWidth: "100%" }}>
+      <div>
+        <label>
+          <input
+            type="radio"
+            name="search-by"
+            value="id"
+            checked={selectedCriteria === "id"}
+            onChange={(e) => setSelectedCriteria(e.target.id)}
+          />
+          Identifikator
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="search-by"
+            value="title"
+            checked={selectedCriteria === "title"}
+            onChange={(e) => setSelectedCriteria(e.target.id)}
+          />
+          Nazev knihy
+        </label>
+        <input
+          type="text"
+          id="search-query"
+          placeholder="Zadejte hledaný výraz"
+          value={searchQuery}
+          onChange={handleChange}
+        />
+        <button
+          type="button"
+          id="search-button"
+          onClick={() =>
+            handleSearch({
+              column: selectedCriteria,
+              searchQuery,
+            })
+          }
+          disabled={searchQuery.length < 3}
+        >
+          Vyhledat
+        </button>
+        <button
+          onClick={() => resetSearch()}
+          style={{ marginLeft: "12px" }}
+          disabled={searchQuery.length === 0}
+        >
+          Zrusit vyhledavani
+        </button>
+      </div>
+
       <div>
         {loans?.length ? (
           <table style={{ minWidth: "100%" }}>
@@ -49,7 +118,10 @@ export const LoanList: FC<LoanListProps> = ({ loans, handleEndLoan }) => {
                       : "Chybi udaj!"}
                   </td>
                   <td>
-                    <button onClick={() => handleEndLoan(loan.id)}>
+                    <button
+                      onClick={() => handleEndLoan(loan.id)}
+                      disabled={loan.endDate !== null}
+                    >
                       Vratit knihu
                     </button>
                   </td>

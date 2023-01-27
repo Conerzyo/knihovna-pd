@@ -11,7 +11,7 @@ import { User } from "../models/user";
 import { ApiCall } from "../utils/api";
 
 export type SearchOptions = {
-  column: "id" | "title";
+  column: string;
   searchQuery: string;
 };
 
@@ -58,43 +58,7 @@ export default function Home() {
       res = (await ApiCall.get("/loans/getAll")).data;
     }
 
-    if (res.loans && res.loans.length > 0) {
-      const userPromises: any[] = [];
-      const bookPromises: any[] = [];
-
-      res.loans.forEach((loanRaw: LoanRaw) => {
-        if (loanRaw.userId != null) {
-          const userPromise = ApiCall.get(
-            `/users/getById?id=${loanRaw.userId}`
-          );
-          userPromises.push(userPromise);
-        }
-
-        if (loanRaw.bookId != null) {
-          const bookPromise = ApiCall.get(
-            `/books/getById?id=${loanRaw.bookId}`
-          );
-          bookPromises.push(bookPromise);
-        }
-      });
-
-      const usersRes = await Promise.all(userPromises);
-      const booksRes = await Promise.all(bookPromises);
-
-      const users = usersRes.map((raw) => raw.data.users).flat();
-      const books = booksRes.map((raw) => raw.data.books).flat();
-
-      const resultLoans = res.loans.map((loanRaw: LoanRaw) => {
-        const _loan: Loan = {
-          ...loanRaw,
-          book: books.find((b) => b.id === loanRaw.bookId),
-          user: users.find((u) => u.id === loanRaw.userId),
-        };
-        return _loan;
-      });
-
-      setMyLoans(resultLoans);
-    }
+    setMyLoans(res.loans?.length ? res.loans : null);
   };
 
   const handleLogin = async (data: FormData) => {
@@ -157,7 +121,7 @@ export default function Home() {
   };
 
   const handleEndLoan = async (loanId: string) => {
-    const res = await ApiCall.get(`/loans/endLoan?id=${loanId}`);
+    const res = await ApiCall.get(`/loans/endLoan?loanId=${loanId}`);
 
     if (res.status === 200) {
       if (activeTab === "myLoans") {
@@ -165,6 +129,21 @@ export default function Home() {
       } else {
         getAllLoans();
       }
+    }
+  };
+
+  const handleLoanSearch = async (searchOptions: SearchOptions | null) => {
+    if (searchOptions === null) {
+      if (activeTab === "myLoans") {
+        getAllLoans(userId);
+      } else {
+        getAllLoans();
+      }
+    } else {
+      // const resLoans = loans?.filter(l => {
+      //   l.
+      // })
+      setMyLoans(loans);
     }
   };
 
@@ -196,13 +175,21 @@ export default function Home() {
             )}
 
             {activeTab === "myLoans" && (
-              <LoanList loans={loans} handleEndLoan={handleEndLoan} />
+              <LoanList
+                loans={loans}
+                handleEndLoan={handleEndLoan}
+                handleSearch={handleLoanSearch}
+              />
             )}
 
             {activeTab === "admin" && <AdminPanel />}
 
             {activeTab === "allLoans" && (
-              <LoanList loans={loans} handleEndLoan={handleEndLoan} />
+              <LoanList
+                loans={loans}
+                handleEndLoan={handleEndLoan}
+                handleSearch={handleLoanSearch}
+              />
             )}
           </div>
         </>
