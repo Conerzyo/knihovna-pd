@@ -75,7 +75,7 @@ export const BookList: FC<BookListProps> = ({
             id="search-button"
             onClick={() =>
               handleSearch({
-                column: selectedCriteria as "id" | "title",
+                column: selectedCriteria,
                 searchQuery,
               })
             }
