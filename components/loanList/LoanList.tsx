@@ -4,9 +4,10 @@ import { SearchOptions } from "../../pages";
 
 type LoanListProps = {
   loans: Loan[] | null;
+  handleEndLoan: (id: string) => void;
 };
 
-export const LoanList: FC<LoanListProps> = ({ loans }) => {
+export const LoanList: FC<LoanListProps> = ({ loans, handleEndLoan }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", minWidth: "100%" }}>
       <div>
@@ -20,6 +21,7 @@ export const LoanList: FC<LoanListProps> = ({ loans }) => {
                 <th>Datum vypujcky</th>
                 <th>Datum vraceni</th>
                 <th>Termin vraceni</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +47,11 @@ export const LoanList: FC<LoanListProps> = ({ loans }) => {
                     {loan.dueDate
                       ? new Date(loan.dueDate).toLocaleDateString()
                       : "Chybi udaj!"}
+                  </td>
+                  <td>
+                    <button onClick={() => handleEndLoan(loan.id)}>
+                      Vratit knihu
+                    </button>
                   </td>
                 </tr>
               ))}
