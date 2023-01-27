@@ -4,7 +4,7 @@ import { SearchOptions } from "../../pages";
 
 type BookListProps = {
   books: Book[] | null;
-  handleSearch: (searchOptions: SearchOptions) => void;
+  handleSearch: (searchOptions: SearchOptions | null) => void;
   loanBook: (bookId: string) => void;
 };
 
@@ -14,7 +14,14 @@ export const BookList: FC<BookListProps> = ({
   loanBook,
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedCriteria, setSelectedCriteria] = useState<string>("");
+  const [selectedCriteria, setSelectedCriteria] = useState<string>("title");
+
+  const resetSearch = () => {
+    setSearchQuery("");
+    setSelectedCriteria("title");
+
+    handleSearch(null);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -54,6 +61,7 @@ export const BookList: FC<BookListProps> = ({
             type="text"
             id="search-query"
             placeholder="Zadejte hledaný výraz"
+            value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button
@@ -67,6 +75,13 @@ export const BookList: FC<BookListProps> = ({
             }
           >
             Vyhledat
+          </button>
+          <button
+            onClick={() => resetSearch()}
+            style={{ marginLeft: "12px" }}
+            disabled={searchQuery.length === 0}
+          >
+            Zrusit vyhledavani
           </button>
         </div>
       </div>
@@ -84,7 +99,7 @@ export const BookList: FC<BookListProps> = ({
           <table>
             <thead>
               <tr>
-                <th>Identifikator</th>
+                {/* <th>Identifikator</th> */}
                 <th>Nazev</th>
                 <th>Autor</th>
                 <th>Rok vydani</th>
@@ -96,7 +111,7 @@ export const BookList: FC<BookListProps> = ({
             <tbody>
               {books.map((book: Book) => (
                 <tr key={book.id}>
-                  <td>{book.id}</td>
+                  {/* <td>{book.id}</td> */}
                   <td>{book.title}</td>
                   <td>{book.author}</td>
                   <td>{book.year}</td>
