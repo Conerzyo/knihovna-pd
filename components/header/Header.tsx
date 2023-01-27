@@ -4,12 +4,14 @@ import { User } from "../../models/user";
 type HeaderProps = {
   user: User | null;
   handleOpenLoginForm: () => void;
+  handleOpenRegistrationForm: () => void;
   handleLogout: () => void;
 };
 
 export const Header: FC<HeaderProps> = ({
   user,
   handleOpenLoginForm,
+  handleOpenRegistrationForm,
   handleLogout,
 }) => {
   return (
@@ -28,6 +30,9 @@ export const Header: FC<HeaderProps> = ({
           <div>Uzivatel neprihlasen {">"}</div>
           <div style={{ marginLeft: "12px" }}>
             <button onClick={handleOpenLoginForm}>Login</button>
+          </div>
+          <div style={{ marginLeft: "12px" }}>
+            <button onClick={handleOpenRegistrationForm}>Registrace</button>
           </div>
         </div>
       )}

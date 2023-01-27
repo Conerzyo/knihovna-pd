@@ -5,6 +5,7 @@ import { Header } from "../components/header/Header";
 import { LoanList } from "../components/loanList/LoanList";
 import { LoginForm } from "../components/loginForm/LoginForm";
 import { Menu } from "../components/menu/Menu";
+import { RegistrationForm } from "../components/registrationForm/RegistrationForm";
 import { Book } from "../models/book";
 import { Loan, LoanRaw } from "../models/loan";
 import { User } from "../models/user";
@@ -20,6 +21,8 @@ export default function Home() {
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const [isUserAdmin, setIsUserAdmin] = useState<boolean | null>(null);
   const [isLoginFormOpen, setIsLoginFormOpen] = useState<boolean>(false);
+  const [isRegistrationFormOpen, setIsRegistrationFormOpen] =
+    useState<boolean>(false);
   const [books, setBooks] = useState<Book[] | null>([]);
   const [loans, setMyLoans] = useState<Loan[] | null>([]);
   const [activeTab, setActiveTab] = useState<string>("catalog");
@@ -75,6 +78,16 @@ export default function Home() {
       setUser(user);
       setIsUserAdmin(user.admin && user.active);
       setIsLoginFormOpen(false);
+    }
+  };
+
+  const handleRegistration = async (data: FormData) => {
+    const registrationRes = await ApiCall.post("/users/create", data);
+
+    if (registrationRes.status === 200) {
+      alert(
+        "Registrace probehla v poradku, musi vas ale schvali administrator"
+      );
     }
   };
 
@@ -147,16 +160,29 @@ export default function Home() {
     }
   };
 
+  const handleFormOpen = (formName: string) => {
+    if (formName === "login") {
+      setIsLoginFormOpen(!isLoginFormOpen);
+    } else {
+      setIsRegistrationFormOpen(!isRegistrationFormOpen);
+    }
+  };
+
   return (
     <>
       <Header
         user={user}
-        handleOpenLoginForm={() => setIsLoginFormOpen(!isLoginFormOpen)}
+        handleOpenLoginForm={() => handleFormOpen("login")}
+        handleOpenRegistrationForm={() => handleFormOpen("registration")}
         handleLogout={handleLogout}
       />
       <LoginForm handleLogin={handleLogin} open={isLoginFormOpen} />
+      <RegistrationForm
+        handleRegistration={handleRegistration}
+        open={isRegistrationFormOpen}
+      />
 
-      {!isLoginFormOpen && (
+      {isLoginFormOpen === false && isRegistrationFormOpen === false && (
         <>
           <Menu
             activeTab={activeTab}
