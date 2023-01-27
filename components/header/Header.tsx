@@ -25,7 +25,7 @@ export const Header: FC<HeaderProps> = ({
         </div>
       ) : (
         <div style={innerHeader}>
-          <div>No logged user! </div>
+          <div>Uzivatel neprihlasen {">"}</div>
           <div style={{ marginLeft: "12px" }}>
             <button onClick={handleOpenLoginForm}>Login</button>
           </div>
