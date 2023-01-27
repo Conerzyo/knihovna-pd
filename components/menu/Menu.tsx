@@ -32,7 +32,7 @@ export const Menu: FC<MenuProps> = ({ activeTab, handleTabChange }) => {
 };
 
 const menuStyles: any = {
-  margin: "24px 0",
+  margin: "24px 0 48px 0",
   display: "flex",
   justifyContent: "center",
 };

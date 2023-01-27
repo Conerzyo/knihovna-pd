@@ -81,13 +81,13 @@ export default function Home() {
       {!isLoginFormOpen && (
         <>
           <Menu activeTab={activeTab} handleTabChange={handleTabChange} />
-          <body style={bodyContainer}>
+          <div style={bodyContainer}>
             <BookList
               books={books}
               handleSearch={getBooks}
               loanBook={() => {}}
             />
-          </body>
+          </div>
         </>
       )}
     </>

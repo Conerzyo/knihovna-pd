@@ -35,7 +35,7 @@ export const BookList: FC<BookListProps> = ({
           margin: "auto",
           display: "flex",
           justifyContent: "space-around",
-          marginBottom: "32px",
+          marginBottom: "48px",
         }}
       >
         <div>
