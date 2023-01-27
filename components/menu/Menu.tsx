@@ -13,7 +13,6 @@ export const Menu: FC<MenuProps> = ({
   isUserAdmin,
   handleTabChange,
 }) => {
-  console.log(activeTab);
   return (
     <div style={menuStyles}>
       <div

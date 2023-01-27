@@ -92,6 +92,22 @@ export default function Home() {
     }
   };
 
+  const handleCreateLoan = async (bookId: string) => {
+    const data = new FormData();
+
+    if (userId) {
+      data.append("userId", userId);
+      data.append("bookId", bookId);
+
+      console.log(`CREATING LOAN FOR:\nUSER ${userId} \nBOOK ${bookId} `);
+      const res = await ApiCall.post("/loans/create", data);
+
+      if (res.status === 200) {
+        getBooks(null);
+      }
+    }
+  };
+
   return (
     <>
       <Header
@@ -114,7 +130,7 @@ export default function Home() {
               <BookList
                 books={books}
                 handleSearch={getBooks}
-                handleLoanBook={() => {}}
+                handleLoanBook={handleCreateLoan}
                 isUserLogged={!!userId}
               />
             )}
