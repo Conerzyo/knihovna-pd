@@ -1,4 +1,4 @@
-from mongoDB.database_filler.DatabaseConnection import DatabaseConnection, Book
+from DatabaseConnection import DatabaseConnection, Book
 
 from bson import ObjectId
 
