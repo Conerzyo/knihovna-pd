@@ -8,4 +8,6 @@ export interface Loan {
   endDate: Date;
   book: Book;
   user: User;
+
+  [index: string]: string | Date | Book | User;
 }

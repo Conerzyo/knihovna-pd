@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AdminPanel } from "../components/adminPanel/AdminPanel";
 import { BookList } from "../components/bookList/BookList";
 import { Header } from "../components/header/Header";
 import { LoanList } from "../components/loanList/LoanList";
@@ -136,6 +136,8 @@ export default function Home() {
             )}
 
             {activeTab === "myLoans" && <LoanList loans={loans} />}
+
+            {activeTab === "admin" && <AdminPanel />}
           </div>
         </>
       )}

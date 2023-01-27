@@ -6,4 +6,6 @@ export interface User {
   username: string;
   active: boolean;
   admin: boolean;
+
+  [index: string]: string | boolean;
 }
