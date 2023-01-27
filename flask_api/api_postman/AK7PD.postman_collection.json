@@ -38,7 +38,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/getByName?name=main_guy",
+							"raw": "http://127.0.0.1:5000/users/getByName?name=test_user1",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -54,7 +54,7 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "main_guy"
+									"value": "test_user1"
 								}
 							]
 						}
@@ -67,7 +67,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/getById?id=63c54df7d9246dd7a7da7e9f",
+							"raw": "http://127.0.0.1:5000/users/getById?id=63d1ae843759e15058a0a17f",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -83,7 +83,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "63c54df7d9246dd7a7da7e9f"
+									"value": "63d1ae843759e15058a0a17f"
 								}
 							]
 						}
@@ -96,7 +96,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/findUsers",
+							"raw": "http://127.0.0.1:5000/users/findUsers?firstName=Andrew",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -112,8 +112,7 @@
 							"query": [
 								{
 									"key": "firstName",
-									"value": "Andrew",
-									"disabled": true
+									"value": "Andrew"
 								},
 								{
 									"key": "lastName",
@@ -132,7 +131,7 @@
 								},
 								{
 									"key": "sortBy",
-									"value": "firstName",
+									"value": "lastName",
 									"disabled": true
 								}
 							]
@@ -149,8 +148,8 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "username",
-									"value": "test_user",
+									"key": "userId",
+									"value": "63d1aaf491731f1f2eacfcb6",
 									"type": "text"
 								},
 								{
@@ -160,22 +159,22 @@
 								},
 								{
 									"key": "firstName",
-									"value": "test",
+									"value": "a",
 									"type": "text"
 								},
 								{
 									"key": "lastName",
-									"value": "test",
+									"value": "b",
 									"type": "text"
 								},
 								{
 									"key": "socialNumber",
-									"value": "123456789",
+									"value": "1",
 									"type": "text"
 								},
 								{
 									"key": "address",
-									"value": "asdasdasd",
+									"value": "a",
 									"type": "text"
 								}
 							]
@@ -213,7 +212,7 @@
 								},
 								{
 									"key": "username",
-									"value": "test_user",
+									"value": "test_user1",
 									"type": "text"
 								},
 								{
@@ -233,7 +232,7 @@
 								},
 								{
 									"key": "socialNumber",
-									"value": "123456789",
+									"value": "1",
 									"type": "text"
 								},
 								{
@@ -348,12 +347,12 @@
 					"response": []
 				},
 				{
-					"name": "FindUsers Copy",
+					"name": "FinBooks",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/findUsers",
+							"raw": "http://127.0.0.1:5000/books/findBooks?title=Catch",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -363,34 +362,52 @@
 							],
 							"port": "5000",
 							"path": [
-								"users",
-								"findUsers"
+								"books",
+								"findBooks"
 							],
 							"query": [
 								{
-									"key": "firstName",
-									"value": "Andrew",
-									"disabled": true
+									"key": "title",
+									"value": "Catch"
 								},
 								{
-									"key": "lastName",
+									"key": "year",
 									"value": "Moore",
 									"disabled": true
 								},
 								{
-									"key": "address",
+									"key": "author",
 									"value": "3243 Cedar Street, California, USA",
 									"disabled": true
-								},
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCoverPicture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/books/getCoverPicture?id=63c54df6d9246dd7a7da7e8f",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"books",
+								"getCoverPicture"
+							],
+							"query": [
 								{
-									"key": "socialNumber",
-									"value": "5530133f6494h",
-									"disabled": true
-								},
-								{
-									"key": "sortBy",
-									"value": "firstName",
-									"disabled": true
+									"key": "id",
+									"value": "63c54df6d9246dd7a7da7e8f"
 								}
 							]
 						}
@@ -401,43 +418,47 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "username",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "password",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "first_name",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "last_name",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "social_number",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "address",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "name",
-								"value": "",
-								"type": "text"
-							}
-						],
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "b",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "b",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "1900",
+									"type": "text"
+								},
+								{
+									"key": "pages",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "countOverall",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "countAvailable",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/books/create",
 							"protocol": "http",
@@ -472,7 +493,7 @@
 							"file": {}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/users/editUser",
+							"raw": "http://127.0.0.1:5000/books/uploatPicture",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -482,8 +503,8 @@
 							],
 							"port": "5000",
 							"path": [
-								"users",
-								"editUser"
+								"books",
+								"uploatPicture"
 							]
 						}
 					},
@@ -552,7 +573,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/loans/getActiveLoans?userId",
+							"raw": "http://127.0.0.1:5000/loans/getActiveLoans?userId=63c54df7d9246dd7a7da7e9f",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -568,7 +589,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": null
+									"value": "63c54df7d9246dd7a7da7e9f"
 								}
 							]
 						}
@@ -579,43 +600,22 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "username",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "password",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "first_name",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "last_name",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "social_number",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "address",
-								"value": "",
-								"type": "text"
-							},
-							{
-								"key": "name",
-								"value": "",
-								"type": "text"
-							}
-						],
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userId",
+									"value": "63c54df7d9246dd7a7da7e9f",
+									"type": "text"
+								},
+								{
+									"key": "bookId",
+									"value": "63c54df6d9246dd7a7da7e8f",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/loans/create",
 							"protocol": "http",
@@ -671,8 +671,14 @@
 						"method": "GET",
 						"header": [],
 						"body": {
-							"mode": "file",
-							"file": {}
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "",
+									"type": "text"
+								}
+							]
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/admin/importDb",
@@ -698,7 +704,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:5000/admin/activateUser",
+							"raw": "http://127.0.0.1:5000/admin/activateUser?userId=63d1ae843759e15058a0a17f",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -710,6 +716,12 @@
 							"path": [
 								"admin",
 								"activateUser"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "63d1ae843759e15058a0a17f"
+								}
 							]
 						}
 					},
@@ -734,6 +746,18 @@
 							"key": "password",
 							"value": "1234",
 							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "test_user1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
