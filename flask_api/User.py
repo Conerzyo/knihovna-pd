@@ -44,6 +44,15 @@ class UserAPI:
         else:
             return {}
 
+    def getById_loan(self, userId):
+        usr = self.db.get_user_by_id(ObjectId(userId))
+
+        if usr:
+            self.users.append(usr)
+            return self.toJson2()
+        else:
+            return {}
+
     def getAllUsers(self):
         self.users = self.db.get_all_users()
         return self.toJson()
@@ -105,3 +114,21 @@ class UserAPI:
         self.users = []
 
         return {"users": user_list}
+
+    def toJson2(self):
+
+        for user in self.users:
+            user_list = {
+                "id": str(user.id),
+                "firstName": user.first_name,
+                "lastName": user.last_name,
+                "socialNumber": user.social_number,
+                "address": user.address,
+                "username": user.username,
+                "loanCount": user.loan_count,
+                "active": user.active,
+                "admin": user.admin}
+
+        self.users = []
+
+        return user_list

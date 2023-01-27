@@ -26,6 +26,15 @@ class BookAPI:
         else:
             return {}
 
+    def getById_loan(self, bookId):
+        book = self.db.get_book_by_id(ObjectId(bookId))
+
+        if book:
+            self.books.append(book)
+            return self.toJson2()
+        else:
+            return {}
+
     def getAllBooks(self):
         self.books = self.db.get_all_books()
         return self.toJson()
@@ -62,3 +71,19 @@ class BookAPI:
         self.books = []
 
         return {"books": book_list}
+
+    def toJson2(self):
+
+        for book in self.books:
+            book_list = {
+                "id": str(book.id),
+                "title": book.title,
+                "author": book.author,
+                "year": book.year,
+                "pages": book.pages,
+                "countOverall": book.count_overall,
+                "countAvailable": book.count_available}
+
+        self.books = []
+
+        return book_list

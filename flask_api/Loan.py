@@ -51,8 +51,8 @@ class LoanAPI:
 
 
         for loan in self.loans:
-            user = userApi.getById(str(loan.user_id))
-            book = bookApi.getById(str(loan.book_id))
+            user = userApi.getById_loan(str(loan.user_id))
+            book = bookApi.getById_loan(str(loan.book_id))
 
             loans_list.append({
                 "id": str(loan.id),
