@@ -113,10 +113,12 @@ def users_create():
     user.hash = password_hash(request.form.get("password"))
 
     new_user = User()
-    new_user = userApi.create(user)
+    created = userApi.create(user)
+    if created:
+        new_user = userApi.getByName(user.username)
+        return new_user
 
-    #return {"created": ObjectId(new_user)}
-    return {}
+    return {"error": "cannot create user"}, 400
 
 
 @app.route("/users/editUser", methods=["POST"])
