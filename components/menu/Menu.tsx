@@ -32,12 +32,24 @@ export const Menu: FC<MenuProps> = ({
         </div>
       )}
       {isUserAdmin && (
-        <div
-          className={activeTab === "admin" ? "menu_item selected" : "menu_item"}
-          onClick={() => handleTabChange("admin")}
-        >
-          Admin
-        </div>
+        <>
+          <div
+            className={
+              activeTab === "allLoans" ? "menu_item selected" : "menu_item"
+            }
+            onClick={() => handleTabChange("allLoans")}
+          >
+            Vsechny vypujcky
+          </div>
+          <div
+            className={
+              activeTab === "admin" ? "menu_item selected" : "menu_item"
+            }
+            onClick={() => handleTabChange("admin")}
+          >
+            Admin
+          </div>
+        </>
       )}
     </div>
   );

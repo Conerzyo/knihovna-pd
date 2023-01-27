@@ -25,10 +25,21 @@ export const LoanList: FC<BookListProps> = ({ loans }) => {
               {loans.map((loan: Loan) => (
                 <tr key={loan.id}>
                   {/* <td>{book.id}</td> */}
-                  <td>{loan.book.title}</td>
-                  <td>{`${loan.user.lastName}, ${loan.user.firstName}`}</td>
-                  <td>{loan.loanDate.toISOString()}</td>
-                  <td>{loan.dueDate.toISOString()}</td>
+                  <td>{loan.book?.title || "Chybi udaj!"}</td>
+                  <td>
+                    {`${loan.user?.lastName}, ${loan.user?.firstName}` ||
+                      "Chybi udaj!"}
+                  </td>
+                  <td>
+                    {loan.loanDate
+                      ? new Date(loan.loanDate).toLocaleDateString()
+                      : "Chybi udaj!"}
+                  </td>
+                  <td>
+                    {loan.dueDate
+                      ? new Date(loan.dueDate).toLocaleDateString()
+                      : "Chybi udaj!"}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -6,7 +6,7 @@ import { LoanList } from "../components/loanList/LoanList";
 import { LoginForm } from "../components/loginForm/LoginForm";
 import { Menu } from "../components/menu/Menu";
 import { Book } from "../models/book";
-import { Loan } from "../models/loan";
+import { Loan, LoanRaw } from "../models/loan";
 import { User } from "../models/user";
 import { ApiCall } from "../utils/api";
 
@@ -17,7 +17,7 @@ export type SearchOptions = {
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
   const [isUserAdmin, setIsUserAdmin] = useState<boolean | null>(null);
   const [isLoginFormOpen, setIsLoginFormOpen] = useState<boolean>(false);
   const [books, setBooks] = useState<Book[] | null>([]);
@@ -49,10 +49,52 @@ export default function Home() {
     setBooks(books);
   };
 
-  const getMyLoans = async () => {
-    const res = (await ApiCall.get(`/loans/getByUserId?userId=${userId}`)).data;
+  const getAllLoans = async (id?: string) => {
+    let res = [];
 
-    setMyLoans(res.loans);
+    if (id !== undefined) {
+      res = (await ApiCall.get(`/loans/getByUserId?userId=${id}`)).data;
+    } else {
+      res = (await ApiCall.get("/loans/getAll")).data;
+    }
+
+    if (res.loans && res.loans.length > 0) {
+      const userPromises: any[] = [];
+      const bookPromises: any[] = [];
+
+      res.loans.forEach((loanRaw: LoanRaw) => {
+        if (loanRaw.userId != null) {
+          const userPromise = ApiCall.get(
+            `/users/getById?id=${loanRaw.userId}`
+          );
+          userPromises.push(userPromise);
+        }
+
+        if (loanRaw.bookId != null) {
+          const bookPromise = ApiCall.get(
+            `/books/getById?id=${loanRaw.bookId}`
+          );
+          bookPromises.push(bookPromise);
+        }
+      });
+
+      const usersRes = await Promise.all(userPromises);
+      const booksRes = await Promise.all(bookPromises);
+
+      const users = usersRes.map((raw) => raw.data.users).flat();
+      const books = booksRes.map((raw) => raw.data.books).flat();
+
+      const resultLoans = res.loans.map((loanRaw: LoanRaw) => {
+        const _loan: Loan = {
+          ...loanRaw,
+          book: books.find((b) => b.id === loanRaw.bookId),
+          user: users.find((u) => u.id === loanRaw.userId),
+        };
+        return _loan;
+      });
+
+      setMyLoans(resultLoans);
+    }
   };
 
   const handleLogin = async (data: FormData) => {
@@ -86,9 +128,12 @@ export default function Home() {
       getBooks(null);
     } else if (tabName === "myLoans") {
       setActiveTab(tabName);
-      getMyLoans();
+      getAllLoans(userId);
     } else if (tabName === "admin") {
       setActiveTab(tabName);
+    } else if (tabName === "allLoans") {
+      setActiveTab(tabName);
+      getAllLoans();
     }
   };
 
@@ -138,6 +183,8 @@ export default function Home() {
             {activeTab === "myLoans" && <LoanList loans={loans} />}
 
             {activeTab === "admin" && <AdminPanel />}
+
+            {activeTab === "allLoans" && <LoanList loans={loans} />}
           </div>
         </>
       )}

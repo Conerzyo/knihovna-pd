@@ -11,3 +11,12 @@ export interface Loan {
 
   [index: string]: string | Date | Book | User;
 }
+
+export interface LoanRaw {
+  id: string;
+  loanDate: Date;
+  dueDate: Date;
+  endDate: Date;
+  bookId: string;
+  userId: string;
+}
