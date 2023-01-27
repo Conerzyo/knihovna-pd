@@ -119,6 +119,9 @@ export default function Home() {
 
     if (res.status === 200) {
       setUser(null);
+      setUserId(undefined);
+      setActiveTab("catalog");
+      setIsUserAdmin(null);
     }
   };
 
@@ -179,7 +182,7 @@ export default function Home() {
           <Menu
             activeTab={activeTab}
             isUserLogged={!!userId}
-            isUserAdmin={isUserAdmin}
+            isUserAdmin={isUserAdmin === true}
             handleTabChange={handleTabChange}
           />
           <div style={bodyContainer}>
