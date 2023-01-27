@@ -1,30 +1,36 @@
-import Link from "next/link";
 import { FC } from "react";
 import { User } from "../../models/user";
 
 type HeaderProps = {
   user: User | null;
-  logout: () => void;
+  handleOpenLoginForm: () => void;
+  handleLogout: () => void;
 };
 
-export const Header: FC<HeaderProps> = ({ user, logout }) => {
+export const Header: FC<HeaderProps> = ({
+  user,
+  handleOpenLoginForm,
+  handleLogout,
+}) => {
   return (
     <div style={containerStyles}>
       <div>Knihovna PD</div>
-
-      {user && (
+      {user ? (
         <div style={innerHeader}>
-          <div>Logged user</div>
-          <div>{`${user.firstName} ${user.lastName}`}</div>
-          <button onClick={logout}>Logout</button>
+          <div>Welcome</div>
+          <div
+            style={{ margin: "0 16px" }}
+          >{`${user.firstName} ${user.lastName}`}</div>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div style={innerHeader}>
+          <div>No logged user! </div>
+          <div style={{ marginLeft: "12px" }}>
+            <button onClick={handleOpenLoginForm}>Login</button>
+          </div>
         </div>
       )}
-      <div style={innerHeader}>
-        <div>No logged user! </div>
-        <div style={{ marginLeft: "12px" }}>
-          <Link href="/auth/login">LOGIN</Link>
-        </div>
-      </div>
     </div>
   );
 };

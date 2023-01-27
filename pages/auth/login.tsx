@@ -1,47 +1,23 @@
 import { useState } from "react";
-import { URL_STRING } from "../../utils/constants";
-import axios from "axios";
+import { ApiCall } from "../../utils/api";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleLogin = async () => {
-    //   const data = new FormData();
+    const data = new FormData();
 
-    //   data.append("username", username);
-    //   data.append("password", password);
+    data.append("username", username);
+    data.append("password", password);
 
-    // const res = await fetch(URL_STRING + "/login", {
-    //   mode: "no-cors",
-    //   method: "POST",
-    //   body: data,
-    //   headers: {
-    //     // "Content-Type": "application/json",
-    //     "Content-Type": "multipart/form-data",
-    //     Accept: "application/json",
-    //   },
-    // });
+    const loginRes = await ApiCall.post("/login", data);
 
-    //   console.log(res);
-    //   const resData = await res.json();
+    const userDataRes = await ApiCall.get(
+      `/users/getById?id=${loginRes.data.loged}`
+    );
 
-    //   console.log(resData);
-
-    // const test = await fetch(URL_STRING + "/books/getAll", {
-    //   method: "GET",
-    //   mode: "no-cors",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // "Content-Type": "multipart/form-data",
-    //     Accept: "application/json",
-    //   },
-    // });
-    // console.log(await test.json());
-
-    axios
-      .get(URL_STRING + "/books/getAll")
-      .then((res) => console.log(res.data));
+    console.log(userDataRes);
   };
 
   return (

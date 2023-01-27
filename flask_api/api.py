@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from flask_restful import Api, Resource
 from flask_cors import CORS
 
@@ -21,7 +21,7 @@ load_dotenv(dotenv_path=dotenv_path)
 app = Flask(__name__)
 app.secret_key = "test key"
 api = Api(app)
-CORS(app)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:3000"}})
 auth = Authorization
 
 connection_str = os.getenv("connection_string")
