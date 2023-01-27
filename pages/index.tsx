@@ -119,6 +119,9 @@ export default function Home() {
 
     if (res.status === 200) {
       setUser(null);
+      setUserId(undefined);
+      setActiveTab("catalog");
+      setIsUserAdmin(null);
     }
   };
 
@@ -153,6 +156,18 @@ export default function Home() {
     }
   };
 
+  const handleEndLoan = async (loanId: string) => {
+    const res = await ApiCall.get(`/loans/endLoan?id=${loanId}`);
+
+    if (res.status === 200) {
+      if (activeTab === "myLoans") {
+        getAllLoans(userId);
+      } else {
+        getAllLoans();
+      }
+    }
+  };
+
   return (
     <>
       <Header
@@ -167,7 +182,7 @@ export default function Home() {
           <Menu
             activeTab={activeTab}
             isUserLogged={!!userId}
-            isUserAdmin={isUserAdmin}
+            isUserAdmin={isUserAdmin === true}
             handleTabChange={handleTabChange}
           />
           <div style={bodyContainer}>
@@ -180,11 +195,15 @@ export default function Home() {
               />
             )}
 
-            {activeTab === "myLoans" && <LoanList loans={loans} />}
+            {activeTab === "myLoans" && (
+              <LoanList loans={loans} handleEndLoan={handleEndLoan} />
+            )}
 
             {activeTab === "admin" && <AdminPanel />}
 
-            {activeTab === "allLoans" && <LoanList loans={loans} />}
+            {activeTab === "allLoans" && (
+              <LoanList loans={loans} handleEndLoan={handleEndLoan} />
+            )}
           </div>
         </>
       )}

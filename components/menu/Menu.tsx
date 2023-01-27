@@ -21,7 +21,7 @@ export const Menu: FC<MenuProps> = ({
       >
         Katalog
       </div>
-      {isUserLogged && (
+      {isUserLogged === true && (
         <div
           className={
             activeTab === "myLoans" ? "menu_item selected" : "menu_item"
@@ -31,7 +31,7 @@ export const Menu: FC<MenuProps> = ({
           Moje vypujcky
         </div>
       )}
-      {isUserAdmin && (
+      {isUserAdmin === true && (
         <>
           <div
             className={
