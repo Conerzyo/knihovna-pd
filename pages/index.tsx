@@ -18,6 +18,7 @@ export type SearchOptions = {
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isUserAdmin, setIsUserAdmin] = useState<boolean | null>(null);
   const [isLoginFormOpen, setIsLoginFormOpen] = useState<boolean>(false);
   const [books, setBooks] = useState<Book[] | null>([]);
   const [loans, setMyLoans] = useState<Loan[] | null>([]);
@@ -64,7 +65,9 @@ export default function Home() {
     );
 
     if (userDataRes.status === 200) {
-      setUser(userDataRes.data.users[0]);
+      const user: User = userDataRes.data.users[0];
+      setUser(user);
+      setIsUserAdmin(user.admin && user.active);
       setIsLoginFormOpen(false);
     }
   };
@@ -100,7 +103,12 @@ export default function Home() {
 
       {!isLoginFormOpen && (
         <>
-          <Menu activeTab={activeTab} handleTabChange={handleTabChange} />
+          <Menu
+            activeTab={activeTab}
+            isUserLogged={!!userId}
+            isUserAdmin={isUserAdmin}
+            handleTabChange={handleTabChange}
+          />
           <div style={bodyContainer}>
             {activeTab === "catalog" && (
               <BookList
