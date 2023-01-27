@@ -3,9 +3,16 @@ import { FC } from "react";
 type MenuProps = {
   activeTab: string;
   handleTabChange: (tabName: string) => void;
+  isUserAdmin: boolean | null;
+  isUserLogged: boolean | null;
 };
 
-export const Menu: FC<MenuProps> = ({ activeTab, handleTabChange }) => {
+export const Menu: FC<MenuProps> = ({
+  activeTab,
+  isUserLogged,
+  isUserAdmin,
+  handleTabChange,
+}) => {
   console.log(activeTab);
   return (
     <div style={menuStyles}>
@@ -15,18 +22,24 @@ export const Menu: FC<MenuProps> = ({ activeTab, handleTabChange }) => {
       >
         Katalog
       </div>
-      <div
-        className={activeTab === "myLoans" ? "menu_item selected" : "menu_item"}
-        onClick={() => handleTabChange("myLoans")}
-      >
-        Moje vypujcky
-      </div>
-      <div
-        className={activeTab === "admin" ? "menu_item selected" : "menu_item"}
-        onClick={() => handleTabChange("admin")}
-      >
-        Admin
-      </div>
+      {isUserLogged && (
+        <div
+          className={
+            activeTab === "myLoans" ? "menu_item selected" : "menu_item"
+          }
+          onClick={() => handleTabChange("myLoans")}
+        >
+          Moje vypujcky
+        </div>
+      )}
+      {isUserAdmin && (
+        <div
+          className={activeTab === "admin" ? "menu_item selected" : "menu_item"}
+          onClick={() => handleTabChange("admin")}
+        >
+          Admin
+        </div>
+      )}
     </div>
   );
 };
