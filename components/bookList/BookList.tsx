@@ -89,14 +89,6 @@ export const BookList: FC<BookListProps> = ({
           </button>
         </div>
       </div>
-      {/* <input
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Hledej knihu..."
-        />
-
-        <button onClick={() => handleSearch(searchQuery)}>Vyhledat</button> */}
 
       <div>
         {books ? (
