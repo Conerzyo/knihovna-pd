@@ -2,11 +2,11 @@ import { FC, useState } from "react";
 import { Loan } from "../../models/loan";
 import { SearchOptions } from "../../pages";
 
-type BookListProps = {
+type LoanListProps = {
   loans: Loan[] | null;
 };
 
-export const LoanList: FC<BookListProps> = ({ loans }) => {
+export const LoanList: FC<LoanListProps> = ({ loans }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", minWidth: "100%" }}>
       <div>
@@ -18,6 +18,7 @@ export const LoanList: FC<BookListProps> = ({ loans }) => {
                 <th>Nazev Knihy</th>
                 <th>Dluznik</th>
                 <th>Datum vypujcky</th>
+                <th>Datum vraceni</th>
                 <th>Termin vraceni</th>
               </tr>
             </thead>
@@ -33,6 +34,11 @@ export const LoanList: FC<BookListProps> = ({ loans }) => {
                   <td>
                     {loan.loanDate
                       ? new Date(loan.loanDate).toLocaleDateString()
+                      : "Chybi udaj!"}
+                  </td>
+                  <td>
+                    {loan.dueDate
+                      ? new Date(loan.endDate).toLocaleDateString()
                       : "Chybi udaj!"}
                   </td>
                   <td>

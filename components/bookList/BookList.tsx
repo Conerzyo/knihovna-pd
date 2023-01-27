@@ -79,6 +79,7 @@ export const BookList: FC<BookListProps> = ({
                 searchQuery,
               })
             }
+            disabled={searchQuery.length < 3}
           >
             Vyhledat
           </button>
