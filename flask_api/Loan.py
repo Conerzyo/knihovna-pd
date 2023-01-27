@@ -30,8 +30,15 @@ class LoanAPI:
         self.loans = self.db.get_all_loans()
         return self.toJson()
 
+    def getById(self, loanId):
+        loan = self.db.get_loan_by_id(ObjectId(loanId))
+        return loan
+
     def create(self, loan):
         return self.db.create_loan(loan=loan)
+
+    def endLoan(self, loan):
+        return self.db.end_loan(loan=loan)
 
     def toJson(self):
         loans_list = []

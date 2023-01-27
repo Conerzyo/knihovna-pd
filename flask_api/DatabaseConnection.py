@@ -176,6 +176,9 @@ class DatabaseConnection:
     def get_all_loans(self) -> [Loan]:
         return self.__get_loans({})
 
+    def get_loan_by_id(self, id) -> [Loan]:
+        return self.__get_loan({"id_": id})
+
     def get_all_users(self) -> [User]:
         return self.__get_users({})
 
@@ -277,6 +280,14 @@ class DatabaseConnection:
         book = Book()
         book.fill_from_dict(book_dict)
         return book
+
+    def __get_loan(self, query) -> Optional[Loan]:
+        loan_dict = self.client[self.database_name][self.books_collection_name].find_one(query)
+        if loan_dict is None:
+            return None
+        loan = Loan()
+        loan.fill_from_dict(loan_dict)
+        return loan
 
     # todo remove repeating code
     def __get_books(self, query) -> [Loan]:

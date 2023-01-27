@@ -111,8 +111,11 @@ def users_create():
     user.social_number = request.form.get("socialNumber")
     user.address = request.form.get("address")
     user.hash = password_hash(request.form.get("password"))
-    userApi.create(user)
 
+    new_user = User()
+    new_user = userApi.create(user)
+
+    #return {"created": ObjectId(new_user)}
     return {}
 
 
@@ -250,6 +253,16 @@ def loans_create():
     loan.book_id = ObjectId(request.form.get("bookId"))
 
     return {"id": loanApi.create(loan)}
+
+
+@app.route("/loans/endLoan", methods=["GET"])
+def loans_endLoan():
+    loanId = request.args.get("loanId")
+    loan = loanApi.getById(loanId)
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == str(loan.user_id)):
+        return {"error": "Unauthorized- login"}, 401
+
+    return loanApi.endLoan(loanId)
 
 
 @app.route("/loans/getByUserId", methods=["GET"])
