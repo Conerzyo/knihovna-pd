@@ -23,4 +23,12 @@ a {
     color: white;
     background: black;
   }
+
+  td {
+    padding: 4px 6px;
+  }
+
+  th {
+    text-align: left;
+  }
 }
