@@ -88,7 +88,6 @@ export const AdminPanel: FC<AdminPanelProps> = ({}) => {
           columns={allUsersData}
           data={users}
           actionLabel="Potvrdit uzivatele"
-          action={undefined}
         />
       </div>
     </body>

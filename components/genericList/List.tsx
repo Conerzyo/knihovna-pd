@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { FC } from "react";
 import { Loan } from "../../models/loan";
 import { User } from "../../models/user";
@@ -7,7 +6,7 @@ type ListProps = {
   columns: ListColumn[];
   data: User[] | Loan[] | undefined | null;
   actionLabel: string;
-  action: (param: string) => void;
+  action?: (param: string) => void;
 };
 
 export type ListColumn = {
