@@ -2,6 +2,7 @@ import hashlib
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from bson import ObjectId
 
 from flask import Flask, request, send_file
 from flask_restful import Api, Resource
@@ -40,7 +41,7 @@ def password_hash(password):
 @app.route("/login", methods=["POST"])
 def login():
     if auth.isLoggedIn():
-        return {"loged": auth.isLoggedIn()}
+        return {"id": auth.isLoggedIn()}
 
     username = request.form.get("username")
     password = password_hash(request.form.get("password"))
@@ -245,10 +246,10 @@ def loans_create():
         return {"error": "Unauthorized- login"}, 401
 
     loan = Loan()
-    loan.user_id = userId
-    loan.book_id = request.form.get("bookId")
-    loanApi.create(loan)
-    return {}
+    loan.user_id = ObjectId(userId)
+    loan.book_id = ObjectId(request.form.get("bookId"))
+
+    return {"id": loanApi.create(loan)}
 
 
 @app.route("/loans/getByUserId", methods=["GET"])
