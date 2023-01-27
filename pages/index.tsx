@@ -150,4 +150,5 @@ const bodyContainer: any = {
   flexDirection: "flex-column",
   justifyContent: "center",
   minWidth: "80vw",
+  margin: "0 40px",
 };
