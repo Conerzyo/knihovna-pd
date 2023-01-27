@@ -23,8 +23,12 @@ export const BookList: FC<BookListProps> = ({
     handleSearch(null);
   };
 
+  const handleChange = (event: any) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", minWidth: "100%" }}>
       <div
         style={{
           width: "80%",
@@ -62,7 +66,7 @@ export const BookList: FC<BookListProps> = ({
             id="search-query"
             placeholder="Zadejte hledaný výraz"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleChange}
           />
           <button
             type="button"
@@ -96,7 +100,7 @@ export const BookList: FC<BookListProps> = ({
 
       <div>
         {books ? (
-          <table>
+          <table style={{ minWidth: "100%" }}>
             <thead>
               <tr>
                 {/* <th>Identifikator</th> */}
@@ -127,7 +131,7 @@ export const BookList: FC<BookListProps> = ({
             </tbody>
           </table>
         ) : (
-          <div>Neco se pokazilo</div>
+          <div>Takovou knihu nemame</div>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BookList } from "../components/bookList/BookList";
 import { Header } from "../components/header/Header";
 import { LoginForm } from "../components/loginForm/LoginForm";
+import { Menu } from "../components/menu/Menu";
 import { Book } from "../models/book";
 import { User } from "../models/user";
 import { ApiCall } from "../utils/api";
@@ -16,6 +17,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoginFormOpen, setIsLoginFormOpen] = useState<boolean>(false);
   const [books, setBooks] = useState<Book[] | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("catalog");
 
   // get books on load
   useEffect(() => {
@@ -63,6 +65,10 @@ export default function Home() {
     }
   };
 
+  const handleTabChange = (tabName: string) => {
+    setActiveTab(tabName);
+  };
+
   return (
     <>
       <Header
@@ -71,10 +77,18 @@ export default function Home() {
         handleLogout={handleLogout}
       />
       <LoginForm handleLogin={handleLogin} open={isLoginFormOpen} />
+
       {!isLoginFormOpen && (
-        <body style={bodyContainer}>
-          <BookList books={books} handleSearch={getBooks} loanBook={() => {}} />
-        </body>
+        <>
+          <Menu activeTab={activeTab} handleTabChange={handleTabChange} />
+          <body style={bodyContainer}>
+            <BookList
+              books={books}
+              handleSearch={getBooks}
+              loanBook={() => {}}
+            />
+          </body>
+        </>
       )}
     </>
   );
@@ -84,4 +98,5 @@ const bodyContainer: any = {
   display: "flex",
   flexDirection: "flex-column",
   justifyContent: "center",
+  minWidth: "80vw",
 };
