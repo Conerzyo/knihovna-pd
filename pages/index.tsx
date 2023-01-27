@@ -2,9 +2,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BookList } from "../components/bookList/BookList";
 import { Header } from "../components/header/Header";
+import { LoanList } from "../components/loanList/LoanList";
 import { LoginForm } from "../components/loginForm/LoginForm";
 import { Menu } from "../components/menu/Menu";
 import { Book } from "../models/book";
+import { Loan } from "../models/loan";
 import { User } from "../models/user";
 import { ApiCall } from "../utils/api";
 
@@ -15,13 +17,15 @@ export type SearchOptions = {
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [isLoginFormOpen, setIsLoginFormOpen] = useState<boolean>(false);
-  const [books, setBooks] = useState<Book[] | null>(null);
+  const [books, setBooks] = useState<Book[] | null>([]);
+  const [loans, setMyLoans] = useState<Loan[] | null>([]);
   const [activeTab, setActiveTab] = useState<string>("catalog");
 
-  // get books on load
+  // get data on load
   useEffect(() => {
-    getBooks(null);
+    handleTabChange("catalog");
   }, []);
 
   const getBooks = async (searchOptions: SearchOptions | null) => {
@@ -44,8 +48,16 @@ export default function Home() {
     setBooks(books);
   };
 
+  const getMyLoans = async () => {
+    const res = (await ApiCall.get(`/loans/getByUserId?userId=${userId}`)).data;
+
+    setMyLoans(res.loans);
+  };
+
   const handleLogin = async (data: FormData) => {
     const loginRes = await ApiCall.post("/login", data);
+
+    setUserId(loginRes.data.loged);
 
     const userDataRes = await ApiCall.get(
       `/users/getById?id=${loginRes.data.loged}`
@@ -66,7 +78,15 @@ export default function Home() {
   };
 
   const handleTabChange = (tabName: string) => {
-    setActiveTab(tabName);
+    if (tabName === "catalog") {
+      setActiveTab(tabName);
+      getBooks(null);
+    } else if (tabName === "myLoans") {
+      setActiveTab(tabName);
+      getMyLoans();
+    } else if (tabName === "admin") {
+      setActiveTab(tabName);
+    }
   };
 
   return (
@@ -82,11 +102,16 @@ export default function Home() {
         <>
           <Menu activeTab={activeTab} handleTabChange={handleTabChange} />
           <div style={bodyContainer}>
-            <BookList
-              books={books}
-              handleSearch={getBooks}
-              loanBook={() => {}}
-            />
+            {activeTab === "catalog" && (
+              <BookList
+                books={books}
+                handleSearch={getBooks}
+                handleLoanBook={() => {}}
+                isUserLogged={!!userId}
+              />
+            )}
+
+            {activeTab === "myLoans" && <LoanList loans={loans} />}
           </div>
         </>
       )}

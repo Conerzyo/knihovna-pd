@@ -5,13 +5,15 @@ import { SearchOptions } from "../../pages";
 type BookListProps = {
   books: Book[] | null;
   handleSearch: (searchOptions: SearchOptions | null) => void;
-  loanBook: (bookId: string) => void;
+  handleLoanBook: (bookId: string) => void;
+  isUserLogged: boolean;
 };
 
 export const BookList: FC<BookListProps> = ({
   books,
+  isUserLogged,
   handleSearch,
-  loanBook,
+  handleLoanBook,
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCriteria, setSelectedCriteria] = useState<string>("title");
@@ -114,8 +116,11 @@ export const BookList: FC<BookListProps> = ({
                   <td>{book.countAvailable}</td>
                   <td>{book.countOverall}</td>
                   <td>
-                    <button onClick={() => loanBook(book.id)}>
-                      Pujcit knihu
+                    <button
+                      onClick={() => handleLoanBook(book.id)}
+                      disabled={!isUserLogged}
+                    >
+                      {isUserLogged ? "Pujcit knihu" : "Musite se prihlasit"}
                     </button>
                   </td>
                 </tr>
