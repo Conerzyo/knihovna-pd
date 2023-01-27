@@ -177,13 +177,13 @@ class DatabaseConnection:
         return self.__get_loans({})
 
     def get_loan_by_id(self, id) -> [Loan]:
-        return self.__get_loan({"id_": id})
+        return self.__get_loan({"_id": id})
 
     def get_all_users(self) -> [User]:
         return self.__get_users({})
 
     def get_all_loans_for_user(self, user_id) -> [Loan]:
-        return self.__get_loans({"userId": user_id})
+        return self.__get_loans({"userId": user_id})[0]
 
     def get_active_loans_for_user(self, user_id) -> [Loan]:
         active_loans = self.__get_loans({"userId": user_id, "endDate": {"$exists": False}})
@@ -282,7 +282,7 @@ class DatabaseConnection:
         return book
 
     def __get_loan(self, query) -> Optional[Loan]:
-        loan_dict = self.client[self.database_name][self.books_collection_name].find_one(query)
+        loan_dict = self.client[self.database_name][self.loans_collection_name].find_one(query)
         if loan_dict is None:
             return None
         loan = Loan()

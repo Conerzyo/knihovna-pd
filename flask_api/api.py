@@ -259,10 +259,13 @@ def loans_create():
 def loans_endLoan():
     loanId = request.args.get("loanId")
     loan = loanApi.getById(loanId)
-    if (not auth.isAdmin()) and (not auth.isLoggedIn() == str(loan.user_id)):
+    loanUserId = str(loan.user_id)
+    if (not auth.isAdmin()) and (not auth.isLoggedIn() == loanUserId):
         return {"error": "Unauthorized- login"}, 401
 
-    return loanApi.endLoan(loanId)
+    loanApi.endLoan(loan)
+
+    return {}
 
 
 @app.route("/loans/getByUserId", methods=["GET"])
